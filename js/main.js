@@ -9,6 +9,13 @@ console.log('insanity check')
 //  cellAdj- image cells adjacent to empty cell, thus allowed to move  
 //  cellEmpty- single empty cell that is the only possible location where images can be dropped
 
+
+// after meeting w/ Michael:
+// click on image, rather than drag. use a 2d array (essentially an array of ) 
+
+
+
+// initial thoughts:
 // Probably going to use some sort combination of ondrag and ondrop to move images from adjacent cells to the empty cell, and then event listener to change the class of the two affected cells.
 // Not sure how to limit the dragability to only those cells that are adjacent to the empty cell. A distance limiter? Since every cell is a square of the same size, if the cellAdj could be limited to a distance slightly larger than the h or w of the empty cell, that would work. Don't know if that is an option.
 
@@ -41,15 +48,15 @@ cell0.setAttribute('src', './images/empty.png');
 
 let cell1 = document.createElement('img');
 cell1.setAttribute('class', 'cell-Img');
-cell1.setAttribute('src', './images/sloth1.png');
+cell1.setAttribute('src', './images/image3.png');
 
 let cell2 = document.createElement('img');
 cell2.setAttribute('class', 'cell-Img');
-cell2.setAttribute('src', './images/sloth2.png');
+cell2.setAttribute('src', './images/image1.png');
 
 let cell3 = document.createElement('img');
 cell3.setAttribute('class', 'cell-Img');
-cell3.setAttribute('src', './images/sloth3.png');
+cell3.setAttribute('src', './images/image2.png');
 
 // Append cells to Container
 container.appendChild(cell0);
