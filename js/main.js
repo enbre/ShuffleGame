@@ -62,7 +62,7 @@ let game = {
 
     score: 0,
 
-    cellGrid: [[0,1,2], [3,4,5], [6,7,8]],
+    // cellGrid: [[0,1,2], [3,4,5], [6,7,8]],
 
     cells: [],
 
@@ -70,7 +70,7 @@ let game = {
         // create cells
         for (let i=0; i<9;i++){
             let cell = document.createElement('img');
-            cell.setAttribute('class', 'cell-Empty');
+            cell.setAttribute('class', 'cell-Start');
             cell.setAttribute('src', `./images/empty.png`);
             container.appendChild(cell);
         }
@@ -98,49 +98,75 @@ let game = {
 
     },
 
-    dealCells: function() {
-        // this.shuffleCells()
+    cellGrid: [[0,1,2], [3,4,5], [6,7,8]],
 
-        for (let i=this.cells.length; i> 0;i--){
+    dealCells: function(cellGrid) {
+        // this.shuffleCells()
+        // linear loop:
+        // for (let i=this.cells.length; i> 0;i--){
+        // 2D loop, getting grid locations: 
+        for (let i =0; i<this.cellGrid.length;i++){
+            let innerArrLen = this.cellGrid[i].length;
+            for (let j=0; j<innerArrLen; j++){
+                // console.log(this.cellGrid.length)
+                // console.log(innerArrLen)
             // check to avoid changing the class of the empty cell
             // if (this.cells[i].value)>0{
             // sets img src for card images and returns last element in array
                 let newCell = this.cells.pop();
-                document.querySelector('.cell-Empty').setAttribute('src', newCell.src);
-                document.querySelector('.cell-Empty').setAttribute('value', newCell.value);
+                document.querySelector('.cell-Start').setAttribute('src', newCell.src);
+                document.querySelector('.cell-Start').setAttribute('value', newCell.value);
+                document.querySelector('.cell-Start').setAttribute('xposition', i);
+                document.querySelector('.cell-Start').setAttribute('yposition', j);
+                console.log(`image value: ${newCell.value}`)
+                console.log(typeof(newCell.xposition))
+                // console.log(`x position: ${this.newCell.xposition}`)
+                // console.log(`y position: ${this.newCell.yposition}`)
                     if (newCell.value>0){
-                document.querySelector('.cell-Empty').setAttribute('class', 'cell-Img');
+                document.querySelector('.cell-Start').setAttribute('class', 'cell-Img');
+                }
+                // document.querySelector('.cell-Start').setAttribute('class', 'cell-Empty')
+                // document.querySelector('.cell-Empty').setAttribute('value', 0)
+
             }
         }
-        document.querySelector('.cell-Empty').setAttribute('value', 0)
     },
 
 
-    // how to loop through cellGrid to look for 
-    findEmpty: function(cellGrid){
 
-        for (let i =0; i<this.cellGrid.length;i++){
-            let innerArrLen = this.cellGrid[i].length;
-            for (let j=0; j<innerArrLen; j++){
-                // console.log(`${i} , ${j}`)
-                if (document.querySelector('.cell-Empty')){
-                    console.log(`${i}, ${j}`)
-                    let emptyRow=i
-                    let emptyCol=j
-                    // return cellGrid [i][j]
-                }
-            }
-        }
-    }
 
-    labelAdjacent: function(emptyRow,emptyCol){
+
+
+
+
+
+
+
+    // // how to loop through cellGrid to look for 
+    // findEmpty: function(cellGrid){
+
+    //     for (let i =0; i<this.cellGrid.length;i++){
+    //         let innerArrLen = this.cellGrid[i].length;
+    //         for (let j=0; j<innerArrLen; j++){
+    //             console.log(`${i} , ${j}`)
+    //             if (document.querySelector('.cell-Empty').value==0){
+    //                 console.log(`${i}, ${j}`)
+    //                 let emptyRow=i
+    //                 let emptyCol=j
+    //                 // return cellGrid [i][j]
+    //             }
+    //         }
+    //     }
+    // }
+
+    // labelAdjacent: function(emptyRow,emptyCol){
         
-        this.cellGrid[emptyRow+1][emptyCol+1] 
-        this.cellGrid[emptyRow-1][emptyCol+1] 
-        this.cellGrid[emptyRow+1][emptyCol-1] 
-        this.cellGrid[emptyRow-1][emptyCol-1] 
-        
-    }
+    //     this.cellGrid[emptyRow+1][emptyCol+1] 
+    //     this.cellGrid[emptyRow-1][emptyCol+1] 
+    //     this.cellGrid[emptyRow+1][emptyCol-1] 
+    //     this.cellGrid[emptyRow-1][emptyCol-1] 
+
+    // }
 
     
 // // add event listeners to determine if cells are movable
@@ -169,8 +195,8 @@ game.createCells()
 game.getCells()
 console.table(game.cellGrid)
 game.shuffleCells()
-game.dealCells()
-game.findEmpty()
+game.dealCells(game.cellGrid)
+// game.findEmpty()
 // console.log(game.cells)
 // */
 
@@ -191,11 +217,17 @@ document.querySelectorAll('.cell-Img').forEach(e =>{
 //     }
 // }),
 
-document.querySelector('.cell-Empty').addEventListener('click', isEmpty)
-    function isEmpty(e){
-    console.log('this cell is empty')
-}
+// document.querySelector('.cell-Empty').addEventListener('click', isEmpty)
+//     function isEmpty(e){
+//     console.log('this cell is empty')
+// }
 
+
+
+
+// Yesterday I got the initial game set up with 3x3 grid, labeled with their values, and have them distributing randomly (mostly). Built a 2D array that replicates game board. 
+
+// Things that are blocking me: locating the grid coordinates for empty cell, saving them as variables, and then locating the grid coordinates of adjacent cells.
 
 
 

@@ -39,6 +39,15 @@
     background-color: cadetblue;
     padding: 2px;
 }
+.cell-Start {
+    justify-self: center;
+    align-self: center;
+    width: 200px;
+    height: 200px;
+    border: 1px solid orangered;
+    background-color: cadetblue;
+    padding: 2px;
+}
 /* taken from box-model-blog: */
 .button{
     /* removes underline from anchor tags */
