@@ -4,10 +4,10 @@
 
 .container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     grid-gap: 2px;
-    width: 420px;
-    height: 420px;
+    width: 620px;
+    height: 620px;
     border: 1px solid black;
     padding: 5px;
     background-color: darkgrey;
@@ -35,9 +35,22 @@
     align-self: center;
     width: 200px;
     height: 200px;
-    border: 1px solid grey;
+    border: 1px solid orangered;
     background-color: cadetblue;
     padding: 2px;
 }
-
+/* taken from box-model-blog: */
+.button{
+    /* removes underline from anchor tags */
+    text-decoration: none;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 3px;
+    transition: filter 0.3s ease;
+    filter: brightness(100%)
+}  
+.button:hover{
+    filter:brightness(130%)
+}
 
