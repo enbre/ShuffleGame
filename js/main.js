@@ -74,16 +74,11 @@ let game = {
         // create cells
         for (let i = 0; i < 9; i++) {
             let cell = document.createElement('div');
-            // cell.createElement('img',);
+            cell.setAttribute('classList', 'cell-Empty');
+            cell.setAttribute('id', `cellDiv${i}`)
             let cellImg =document.createElement('img')
-
             cellImg.setAttribute('src', `./images/empty.png`);
             cellImg.setAttribute('class', 'cell-Img');
-            // cell.setAttribute('classList', 'cell-Img');
-            // cell.setAttribute('classList', 'cell-Adj');
-            cell.setAttribute('classList', 'cell-Empty');
-            // cell.setAttribute('src', `./images/empty.png`);
-            cell.setAttribute('id', `cellDiv${i}`)
             cellImg.setAttribute('id', `cell${i}`)
             container.appendChild(cell);
             cell.appendChild(cellImg);
@@ -101,7 +96,7 @@ let game = {
         // console.log(this.cells)
     },
 
-// shuffles cells array so they are in random order:
+// shuffles cells array so they are in random order, done at the start of the game:
     shuffleCells: function () {
         // this.getCells()
         for (let i = (this.cellArr.length - 1); i > 0; i--) {
@@ -117,19 +112,14 @@ let game = {
 // distributes shuffled cells to grid of cell containers at the start of the game:
     dealCells: function () {
         // this.shuffleCells()
-        // let newCell = this.cells.pop();
         // linear array to apply image objects to div cell containers:
         for (let k=0; k<this.cellArr.length;k++){
             let newCell = this.cellArr[k];
             // console.log(newCell)
             // console.log(newCell.src)
-            // document.getElementById(`cell${k}`).setAttribute('src',`./images/image${k}.png`)
             document.getElementById(`cell${k}`).setAttribute('src', newCell.src)
             document.getElementById(`cell${k}`).setAttribute('value', newCell.value)
             document.getElementById(`cell${k}`).setAttribute('id', newCell.id)
-            // document.getElementById(`cell${k}`).innerHTML.src=(newCell.src)
-            // document.getElementById(`cell${k}`).innerHTML.src=newCell.src
-            // document.getElementById(`cell${k}`).appendChild(newCell.src)
         }
             
             
@@ -140,51 +130,37 @@ let game = {
     // apply X and Y grid coordinates to image object: 
     // This needs to be rerun after every move
     gridLocations: function (){
+        // make a duplicate of the shuffled card images array to leave the original intact
         let dupCellArr  = this.cellArr.slice()
-        console.log(this.cellArr)
         // console.log(dupCellArr)
         for (let i = 0; i < this.cellGrid.length; i++) {
             let innerArrLen = this.cellGrid[i].length;
             for (let j = 0; j < innerArrLen; j++) {
                 let newCell = dupCellArr.shift();
-                newCell.xposition = i;
-                newCell.yposition = j;
-                // console.log(newCell)
+                newCell.xposition = j;
+                newCell.yposition = i;
             }
         }
     },
-                
 
-    // console.log('--------------------------------------------------------------------------------------------------'),
-
-    // loop through cellGrid to find and return X coordinate:
-    findEmptyX: function () {
+    // adjustable variables for X and Y coordinates of empty cell:
+    emptyX: "",
+    emptyY: "",
+    
+    // loop through cellArr to find and return X and Y coordinates:
+    findEmpty: function () {
+        // console.log(this.cellArr)
         for (let i=0; i<this.cellArr.length;i++){
-           let tempCell=document.getElementById(`img${i}`)
-        //    console.log(typeof(tempCell))
-        //    console.log(tempCell)
-
-        //    let tempCell=document.getElementById(`img${i}`)
-        //    console.log(typeof(tempCell))
-        //    console.log(tempCell)
-        //    console.log(tempCell.value)
-            // if (tempCell.value ==0){
-            // console.log(tempCell.xposition)
-            //     return tempCell.xposition
-            // }
+            let tempCell=this.cellArr[i]
+            // console.log(tempCell.value)
+            if (tempCell.value==0){
+                // console.log(tempCell.xposition)
+                this.emptyX= tempCell.xposition
+                this.emptyY= tempCell.yposition
+            } 
         }
     },
-
-    // loop through cellGrid to find and return Y coordinate:
-    // findEmptyY: function () {
-    //     for (let i=0; i<this.cellArr.length;i++){
-    //        let tempCell=document.getElementById(`img${i}`)
-    //         if (tempCell.value ==0){
-    //         console.log(tempCell.yposition)
-    //             return tempCell.yposition
-    //         }
-    //     }
-    // }
+    
 
     // labelAdjacent: function(emptyRow,emptyCol){
 
@@ -211,17 +187,16 @@ let game = {
 //     input.classList.toggle(cellEmpty)
 // }
 
-// let cellGrid = [[0,1,2], [3,4,5], [6,7,8]]
-
 game.createCellDivs()
 game.getCells()
 console.table(game.cellGrid)
 game.shuffleCells()
-// console.log(game.cells)
 game.dealCells()
 game.gridLocations()
-game.findEmptyX()
-// game.findEmpty()
+game.findEmpty()
+
+console.log(`Empty cell X coordiante: ${game.emptyX}`)
+console.log(`Empty cell Y coordiante: ${game.emptyY}`)
 
 
 // add event listeners to determine if cells are movable
@@ -246,17 +221,13 @@ game.findEmptyX()
 // }
 
 
-// Yesterday I got the initial game set up with 3x3 grid, labeled with their values, and have them distributing randomly (mostly). Built a 2D array that replicates game board. 
-
-// Things that are blocking me: locating the grid coordinates for empty cell, saving them as variables, and then locating the grid coordinates of adjacent cells.
 
 
-
-
-
-// locate where the empty cell is on the grid
+    // locate where the empty cell is on the grid
+// done
     // by looping through a 2D array looking for the 'cell-Empty' class
-// locate which cells are adjacent to empty cell (above, right, left, bottom)
+// done, via value of 0, not class
+    // locate which cells are adjacent to empty cell (above, right, left, bottom)
     // based on 2D array empty cell location, each cell +/- 1 in X and Y axis
 // change the class of those adjacent cells to '.cell-Adj' 
 // apply 'click' listener event to adjacent cells to allow them to be clicked
