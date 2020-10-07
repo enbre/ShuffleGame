@@ -60,35 +60,41 @@ document.body.appendChild(container)
 
 // /*
 let game = {
-
-    score: 0,
-
-    // cellGrid: [[0,1,2], [3,4,5], [6,7,8]],
-
+// number of player moves:
+    moves: 0,
+// 2D array representing the game board locations:
+// this is used to cycle through to keep track of empty cell location:
+    cellGrid: [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
+// game array:
     cells: [],
-// create divs - apply images with innerHTML
-// look into classList - allows multiple classes to element, can add, remove and toggle on/off classes
-    createCells: function () {
+    
+    // creates divs containers for images:
+    //apply images with innerHTML- though this doesn't seem to be working
+    createCellDivs: function () {
         // create cells
         for (let i = 0; i < 9; i++) {
-            let cell = document.createElement('img');
-            cell.setAttribute('class', 'cell-Start');
-            cell.setAttribute('src', `./images/empty.png`);
+            let cell = document.createElement('div');
+            cell.setAttribute('class', 'cell-Img');
+            // cell.setAttribute('classList', 'cell-Img');
+            // cell.setAttribute('classList', 'cell-Adj');
+            cell.setAttribute('classList', 'cell-Empty');
+            // cell.setAttribute('src', `./images/empty.png`);
+            cell.setAttribute('id', `cell${i}`)
             container.appendChild(cell);
         }
     },
 
+    // populates cells array with object with image source, value, and id (is ID useful for the image?):
     getCells: function () {
         // this.createCells()
         for (let i = 1; i < 9; i++) {
-            this.cells.push({ src: `./images/image${i}.png`, value: i })
+            this.cells.push({ src: `./images/image${i}.png`, value: i, id: `img${i}` })
         }
-        this.cells.push({ src: `./images/empty.png`, value: 0 })
+        this.cells.push({ src: `./images/empty.png`, value: 0, id: `img0` })
         // console.log(this.cells)
-
     },
 
-
+// shuffles cells array so they are in random order:
     shuffleCells: function () {
         // this.getCells()
         for (let i = (this.cells.length - 1); i > 0; i--) {
@@ -97,71 +103,115 @@ let game = {
             this.cells[i] = this.cells[x]
             this.cells[x] = temp
         }
-
+        // console.log(this.cells)
+        // console.log('--------------------------------------------------------------------------------------------------'),
     },
 
-    cellGrid: [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
-
-    dealCells: function (cellGrid) {
+// distributes shuffled cells to grid of cell containers at the start of the game:
+    dealCells: function () {
         // this.shuffleCells()
-        // linear loop:
-        // for (let i=this.cells.length; i> 0;i--){
-        // 2D loop, getting grid locations: 
-        for (let i = 0; i < this.cellGrid.length; i++) {
-            // let innerArrLen = this.cellGrid.length;
-            let innerArrLen = this.cellGrid[i].length;
-            // for (let j=0; j<this.cellGrid.length; j++){
-            for (let j = 0; j < innerArrLen; j++) {
-                // check to avoid changing the class of the empty cell
-                // if (this.cells[i].value)>0{
-                // sets img src for card images and returns last element in array
-                let newCell = this.cells.pop();
-                let element= document.querySelector('.cell-Start')
-                element.setAttribute('src', newCell.src);
-                element.setAttribute('value', newCell.value);
-                element.setAttribute('xposition', i);
-                element.setAttribute('yposition', j);
-                // console.log(`image value: ${newCell.value}`)
-                // document.querySelector('.cell-Start').setAttribute('class', 'cell-Img');
-                // document.querySelector('.cell-Start').setAttribute('value', newCell.value);
-                // document.querySelector('.cell-Start').setAttribute('xposition', i);
-                // document.querySelector('.cell-Start').setAttribute('yposition', j);
-                // console.log(`image value: ${newCell.value}`)
-                document.querySelector('.cell-Start').setAttribute('class', 'cell-Img');
-
-                // console.log(typeof(newCell.xposition))
-                // console.log(`x position: ${newCell.xposition}`)
-                // console.log(`y position: ${newCell.yposition}`)
-                // apply "empty" id to select it and then change class
-
-                if (newCell.value==0){
-                if (newCell.src == './images/empty.png') {
-                    document.querySelector('.cell-Img').setAttribute('class', 'cell-Empty');
-                }
-                // document.querySelector('.cell-Start').setAttribute('class', 'cell-Empty')
-                // document.querySelector('.cell-Empty').setAttribute('value', 0)
-
-            }
-            // document.querySelector('value', 0)).setAttribute('class', 'cell-Empty');
+        // let newCell = this.cells.pop();
+        // linear array to apply image objects to div cell containers:
+        for (let k=0; k<this.cells.length;k++){
+            let newCell = this.cells[k];
+            console.log(newCell)
+            // document.getElementById(`cell${k}`).appendChild(newCell.src)
+            document.getElementById(`cell${k}`).setAttribute('src',`./images/image${k}.png`)
+            // document.getElementById(`cell${k}`).innerHTML.src=newCell.src
         }
-    }
-},
-      // // how to loop through cellGrid to look for 
-//     findEmpty: function (cellGrid) {
-//         for (let i = 0; i < this.cellGrid.length; i++) {
-//             let innerArrLen = this.cellGrid[i].length;
-//             for (let j = 0; j < innerArrLen; j++) {
-//                 console.log(`${i} , ${j}`)
-//                 if (document.querySelector('.cell-Empty')) {
-//                     console.log(`${i}, ${j}`)
-//                     let emptyRow = i
-//                     let emptyCol = j
-//                     // return cellGrid [i][j]
-//                 })
-//             }
+            
+            
+    },
+
+    // gridLocations: function (cellGrid){
+
+    //     // apply X and Y grid coordinates to image object: 
+    //     // I think this needs to be rerun after every move
+    //     for (let i = 0; i < this.cellGrid.length; i++) {
+    //         let innerArrLen = this.cellGrid[i].length;
+    //         for (let j = 0; j < innerArrLen; j++) {
+    //             let newCell = this.cells.pop();
+    //             newCell.xposition = i;
+    //             newCell.yposition = j;
+    //             console.log(newCell)
+    //         }
+    //     }
+    // },
+                
+                // document.querySelector('.cell-Img').setAttribute('src' , 'newCell.src')
+                // document.querySelector('.cell-Img').src=newCell.src
+                // let placeCell = document.querySelector('.cell-Img')
+                // placeCell.innerHTML(newCell.src)
+                
+                
+                
+                // // console.log(newCell)
+                // // for (let k=0; k<9;k++){
+                    // // let placeCell= document.getElementById(`cell${k}`)
+                    // placeCell.setAttribute('src', newCell.src);
+                    // placeCell.setAttribute('value', newCell.value);
+                    // placeCell.innerHTML.src=(`./images/image5.png`)
+                    // placeCell.innerHTML.src=(`./images/image${i}.png`)
+                    // placeCell.setAttribute('classList', 'cell-Img');
+                    // document.querySelector('div').appendChild(newCell)
+                    // console.log(`image value: ${newCell.value}`)
+                    // console.log(`image value: ${newCell.value}`)
+                    // }
+                
+
+// distributes shuffled cells to grid of cell containers:
+// this function has gotten way too bloated and is not working. going to start over with just the 2D array loop
+// dealCells: function (cellGrid) {
+//     // this.shuffleCells()
+//     for (let i = 0; i < this.cellGrid.length; i++) {
+//         let innerArrLen = this.cellGrid[i].length;
+//         for (let j = 0; j < innerArrLen; j++) {
+
+//             // sets img src for card images and returns last element in array
+//             // let newCell = this.cells.pop();
+//             // // console.log(newCell)
+//             // // for (let k=0; k<9;k++){
+//             // // let placeCell= document.getElementById(`cell${k}`)
+//             // let placeCell = document.querySelector('.cell')
+//             // placeCell.setAttribute('src', newCell.src);
+//             // placeCell.setAttribute('value', newCell.value);
+//             // placeCell.innerHTML.src=(`./images/image5.png`)
+//             // placeCell.innerHTML.src=(`./images/image${i}.png`)
+//             // placeCell.setAttribute('xposition', i);
+//             // placeCell.setAttribute('yposition', j);
+//             // placeCell.setAttribute('classList', 'cell-Img');
+//             // document.querySelector('div').appendChild(newCell)
+//             // console.log(`image value: ${newCell.value}`)
+//             // console.log(`image value: ${newCell.value}`)
+//             // }
 //         }
+//         // document.getElementById('img0').setAttribute('classList', 'cell-Empty');
+
 //     }
-// }
+//     // document.querySelector('value', 0)).setAttribute('class', 'cell-Empty');
+//     // }
+//     // }
+// },
+
+    // console.log('--------------------------------------------------------------------------------------------------'),
+
+
+    // // how to loop through cellGrid to look for 
+    //     findEmpty: function (cellGrid) {
+    //         for (let i = 0; i < this.cellGrid.length; i++) {
+    //             let innerArrLen = this.cellGrid[i].length;
+    //             for (let j = 0; j < innerArrLen; j++) {
+    //                 console.log(`${i} , ${j}`)
+    //                 if (document.querySelector('.cell-Empty')) {
+    //                     console.log(`${i}, ${j}`)
+    //                     let emptyRow = i
+    //                     let emptyCol = j
+    //                     // return cellGrid [i][j]
+    //                 })
+    //             }
+    //         }
+    //     }
+    // }
 
     // labelAdjacent: function(emptyRow,emptyCol){
 
@@ -177,28 +227,35 @@ let game = {
     // function isEmpty(e) {
     //     console.log('this cell is empty')
     // }
-    
-} 
+
+}
 //  ^^^^^^^ END OF GAME OBJECT- should be yellow
+
+// function to switch between multiple classes:
+// const cellClassSwitch = function (input, cellImg, cellAdj, cellEmpty){
+//     input.classList.toggle(cellImg)
+//     input.classList.toggle(cellAdj)
+//     input.classList.toggle(cellEmpty)
+// }
 
 // let cellGrid = [[0,1,2], [3,4,5], [6,7,8]]
 
-game.createCells()
+game.createCellDivs()
 game.getCells()
 console.table(game.cellGrid)
 game.shuffleCells()
-game.dealCells(game.cellGrid)
-// game.findEmpty()
 // console.log(game.cells)
+game.dealCells()
+// game.findEmpty()
 
 
 // add event listeners to determine if cells are movable
-document.querySelectorAll('.cell-Img').forEach(e => {
-    e.addEventListener('click', isNotMovable)
-    function isNotMovable(e) {
-        console.log('this cell is not movable')
-    }
-})
+// document.querySelectorAll('.cell-Img').forEach(e => {
+//     e.addEventListener('click', isNotMovable)
+//     function isNotMovable(e) {
+//         console.log('this cell is not movable')
+//     }
+// })
 
 
 // document.querySelectorAll('.cell-Adj').forEach(e =>{
@@ -208,10 +265,10 @@ document.querySelectorAll('.cell-Img').forEach(e => {
 //     }
 // }),
 
-document.querySelector('.cell-Empty').addEventListener('click', isEmpty)
-function isEmpty(e) {
-    console.log('this cell is empty')
-}
+// document.querySelector('.cell-Empty').addEventListener('click', isEmpty)
+// function isEmpty(e) {
+//     console.log('this cell is empty')
+// }
 
 
 // findEmpty: function(cellGrid) {
@@ -225,12 +282,12 @@ function isEmpty(e) {
 //                         let emptyCol = j
 //                         // return cellGrid [i][j]
 //                     }
-                    
-                    
+
+
 //             }
 //         }
 // }
-    
+
 
 
 
