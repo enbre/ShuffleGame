@@ -121,56 +121,208 @@ let game = {
             document.getElementById(`cell${k}`).setAttribute('value', newCell.value)
             document.getElementById(`cell${k}`).setAttribute('id', newCell.id)
         }
+    },     
             
-            
-    },
-    // Again for reference:
-    // cellGrid: [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
-
-    // apply X and Y grid coordinates to image object: 
-    // This needs to be rerun after every move
+        
+        // apply X and Y grid coordinates to image object: 
+        // This needs to be rerun after every move
     gridLocations: function (){
-        // make a duplicate of the shuffled card images array to leave the original intact
-        let dupCellArr  = this.cellArr.slice()
-        // console.log(dupCellArr)
-        for (let i = 0; i < this.cellGrid.length; i++) {
-            let innerArrLen = this.cellGrid[i].length;
-            for (let j = 0; j < innerArrLen; j++) {
-                let newCell = dupCellArr.shift();
-                newCell.xposition = j;
-                newCell.yposition = i;
+            // make a duplicate of the shuffled card images array to leave the original intact
+            let dupCellArr  = this.cellArr.slice()
+            // console.log(dupCellArr)
+            for (let i = 0; i < this.cellGrid.length; i++) {
+                let innerArrLen = this.cellGrid[i].length;
+                for (let j = 0; j < innerArrLen; j++) {
+                    let newCell = dupCellArr.shift();
+                    newCell.xposition = j;
+                    newCell.yposition = i;
+                }
             }
-        }
+        },
+        
+        // adjustable variables for X and Y coordinates of empty cell:
+        emptyX: "",
+        emptyY: "",
+        
+        // loop through cellArr to find and return X and Y coordinates:
+        findEmpty: function () {
+            // console.log(this.cellArr)
+            for (let i=0; i<this.cellArr.length;i++){
+                let tempCell=this.cellArr[i]
+                // console.log(tempCell.value)
+                if (tempCell.value==0){
+                    // console.log(tempCell.xposition)
+                    this.emptyX= tempCell.xposition
+                    this.emptyY= tempCell.yposition
+                } 
+            }
+        
+        
     },
 
-    // adjustable variables for X and Y coordinates of empty cell:
-    emptyX: "",
-    emptyY: "",
+    // Larger 2D array for reference:
+    cellGrid2: [[0, 1, 2, 3], [4, 5, 6, 7, ], [8, 9 , 10, 11, ], [12, 13, 14, 15, ]],
     
-    // loop through cellArr to find and return X and Y coordinates:
-    findEmpty: function () {
-        // console.log(this.cellArr)
+    // first adjacent coords:
+    adjX_1:"",
+    adjY_1:"",
+    
+    // second adjacent coords:
+    adjX_2:"",
+    adjY_2:"",
+    
+    // third adjacent coords:
+    adjX_3:"",
+    adjY_3:"",
+    
+    // fourth adjacent coords:
+    adjX_4:"",
+    adjY_4:"",
+// use empty X and Y coordinates to identify which cells are adjacent to empty:
+    labelAdjacent: function(){
         for (let i=0; i<this.cellArr.length;i++){
-            let tempCell=this.cellArr[i]
-            // console.log(tempCell.value)
-            if (tempCell.value==0){
-                // console.log(tempCell.xposition)
-                this.emptyX= tempCell.xposition
-                this.emptyY= tempCell.yposition
-            } 
+            // need nine conditionals to deal with all possible locations(X max, X min, Y max, Y min, and in the field)
+            
+            // upper left corner:
+            if (this.emptyX==0 && this.emptyY==0){
+            // first adjacent coords:
+            this.adjX_1==this.emptyX+1
+            this.adjY_1==this.emptyY
+            // second adjacent coords:
+            this.adjX_2==this.emptyX
+            this.adjY_2==this.emptyX+1
+            // third adjacent coords:
+            this.adjX_3==null
+            this.adjY_3==null
+            // fourth adjacent coords:
+             this.adjX_4==null
+             this.adjY_4==null
+            }
+            // lower left corner:
+            else if (this.emptyX==0 && this.emptyY==this.cellGrid.length){
+            // first adjacent coords:
+            this.adjX_1==this.emptyX+1
+            this.adjY_1==this.emptyY
+            // second adjacent coords:
+            this.adjX_2==this.emptyX
+            this.adjY_2==this.emptyX+1
+            // third adjacent coords:
+            this.adjX_3==this.emptyX+1
+            this.adjY_3==this.emptyX+1
+            // fourth adjacent coords:
+             this.adjX_4==this.emptyX+1
+             this.adjY_4==this.emptyX+1  
+            }
+            // upper right corner:
+            else if (this.emptyX==this.cellGrid.length && this.emptyY==0){
+            // first adjacent coords:
+            this.adjX_1==this.emptyX+1
+            this.adjY_1==this.emptyY
+            // second adjacent coords:
+            this.adjX_2==this.emptyX
+            this.adjY_2==this.emptyX+1
+            // third adjacent coords:
+            this.adjX_3==this.emptyX+1
+            this.adjY_3==this.emptyX+1
+            // fourth adjacent coords:
+             this.adjX_4==this.emptyX+1
+             this.adjY_4==this.emptyX+1    
+            }
+            // lower right corner:
+            else if (this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
+            // first adjacent coords:
+            this.adjX_1==this.emptyX+1
+            this.adjY_1==this.emptyY
+            // second adjacent coords:
+            this.adjX_2==this.emptyX
+            this.adjY_2==this.emptyX+1
+            // third adjacent coords:
+            this.adjX_3==this.emptyX+1
+            this.adjY_3==this.emptyX+1
+            // fourth adjacent coords:
+            this.adjX_4==this.emptyX+1
+            this.adjY_4==this.emptyX+1    
+            }
+            // left edge:
+            else if(this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
+            // first adjacent coords:
+            this.adjX_1==this.emptyX+1
+            this.adjY_1==this.emptyY
+            // second adjacent coords:
+            this.adjX_2==this.emptyX
+            this.adjY_2==this.emptyX+1
+            // third adjacent coords:
+            this.adjX_3==this.emptyX+1
+            this.adjY_3==this.emptyX+1
+            // fourth adjacent coords:
+             this.adjX_4==this.emptyX+1
+             this.adjY_4==this.emptyX+1     
+            }
+            // right edge:
+            else if(this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
+            // first adjacent coords:
+            this.adjX_1==this.emptyX+1
+            this.adjY_1==this.emptyY
+            // second adjacent coords:
+            this.adjX_2==this.emptyX
+            this.adjY_2==this.emptyX+1
+            // third adjacent coords:
+            this.adjX_3==this.emptyX+1
+            this.adjY_3==this.emptyX+1
+            // fourth adjacent coords:
+             this.adjX_4==this.emptyX+1
+             this.adjY_4==this.emptyX+1     
+            }
+            // top edge:
+            else if(this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
+            // first adjacent coords:
+            this.adjX_1==this.emptyX+1
+            this.adjY_1==this.emptyY
+            // second adjacent coords:
+            this.adjX_2==this.emptyX
+            this.adjY_2==this.emptyX+1
+            // third adjacent coords:
+            this.adjX_3==this.emptyX+1
+            this.adjY_3==this.emptyX+1
+            // fourth adjacent coords:
+             this.adjX_4==this.emptyX+1
+             this.adjY_4==this.emptyX+1     
+            }
+            // bottom edge:
+            else if(this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
+            // first adjacent coords:
+            this.adjX_1==this.emptyX+1
+            this.adjY_1==this.emptyY
+            // second adjacent coords:
+            this.adjX_2==this.emptyX
+            this.adjY_2==this.emptyX+1
+            // third adjacent coords:
+            this.adjX_3==this.emptyX+1
+            this.adjY_3==this.emptyX+1
+            // fourth adjacent coords:
+             this.adjX_4==this.emptyX+1
+             this.adjY_4==this.emptyX+1     
+            }
+            // in the field:
+            else {
+            // first adjacent coords:
+            this.adjX_1==this.emptyX+1
+            this.adjY_1==this.emptyY
+            // second adjacent coords:
+            this.adjX_2==this.emptyX
+            this.adjY_2==this.emptyX+1
+            // third adjacent coords:
+            this.adjX_3==this.emptyX+1
+            this.adjY_3==this.emptyX+1
+            // fourth adjacent coords:
+             this.adjX_4==this.emptyX+1
+             this.adjY_4==this.emptyX+1     
+            }
+
+      
+
         }
-    },
-    
-
-    // labelAdjacent: function(emptyRow,emptyCol){
-
-    //     this.cellGrid[emptyRow+1][emptyCol+1] 
-    //     this.cellGrid[emptyRow-1][emptyCol+1] 
-    //     this.cellGrid[emptyRow+1][emptyCol-1] 
-    //     this.cellGrid[emptyRow-1][emptyCol-1] 
-
-    // }
-
+    }
 
     // document.querySelector('.cell-Empty').addEventListener('click', isEmpty)
     // function isEmpty(e) {
@@ -189,7 +341,7 @@ let game = {
 
 game.createCellDivs()
 game.getCells()
-console.table(game.cellGrid)
+console.table(game.cellGrid2)
 game.shuffleCells()
 game.dealCells()
 game.gridLocations()
