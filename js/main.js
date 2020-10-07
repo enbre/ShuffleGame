@@ -66,7 +66,7 @@ let game = {
 // this is used to cycle through to keep track of empty cell location:
     cellGrid: [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
 // game array:
-    cells: [],
+    cellArr: [],
     
     // creates divs containers for images:
     //apply images with innerHTML- though this doesn't seem to be working
@@ -74,13 +74,20 @@ let game = {
         // create cells
         for (let i = 0; i < 9; i++) {
             let cell = document.createElement('div');
-            cell.setAttribute('class', 'cell-Img');
+            // cell.createElement('img',);
+            let cellImg =document.createElement('img')
+
+            cellImg.setAttribute('src', `./images/empty.png`);
+            cellImg.setAttribute('class', 'cell-Img');
             // cell.setAttribute('classList', 'cell-Img');
             // cell.setAttribute('classList', 'cell-Adj');
             cell.setAttribute('classList', 'cell-Empty');
             // cell.setAttribute('src', `./images/empty.png`);
-            cell.setAttribute('id', `cell${i}`)
+            cell.setAttribute('id', `cellDiv${i}`)
+            cellImg.setAttribute('id', `cell${i}`)
             container.appendChild(cell);
+            cell.appendChild(cellImg);
+
         }
     },
 
@@ -88,20 +95,20 @@ let game = {
     getCells: function () {
         // this.createCells()
         for (let i = 1; i < 9; i++) {
-            this.cells.push({ src: `./images/image${i}.png`, value: i, id: `img${i}` })
+            this.cellArr.push({ src: `./images/image${i}.png`, value: i, id: `img${i}` })
         }
-        this.cells.push({ src: `./images/empty.png`, value: 0, id: `img0` })
+        this.cellArr.push({ src: `./images/empty.png`, value: 0, id: `img0` })
         // console.log(this.cells)
     },
 
 // shuffles cells array so they are in random order:
     shuffleCells: function () {
         // this.getCells()
-        for (let i = (this.cells.length - 1); i > 0; i--) {
+        for (let i = (this.cellArr.length - 1); i > 0; i--) {
             x = (Math.floor(Math.random() * (i)))
-            temp = this.cells[i]
-            this.cells[i] = this.cells[x]
-            this.cells[x] = temp
+            temp = this.cellArr[i]
+            this.cellArr[i] = this.cellArr[x]
+            this.cellArr[x] = temp
         }
         // console.log(this.cells)
         // console.log('--------------------------------------------------------------------------------------------------'),
@@ -112,103 +119,69 @@ let game = {
         // this.shuffleCells()
         // let newCell = this.cells.pop();
         // linear array to apply image objects to div cell containers:
-        for (let k=0; k<this.cells.length;k++){
-            let newCell = this.cells[k];
-            console.log(newCell)
-            // document.getElementById(`cell${k}`).appendChild(newCell.src)
-            document.getElementById(`cell${k}`).setAttribute('src',`./images/image${k}.png`)
+        for (let k=0; k<this.cellArr.length;k++){
+            let newCell = this.cellArr[k];
+            // console.log(newCell)
+            // console.log(newCell.src)
+            // document.getElementById(`cell${k}`).setAttribute('src',`./images/image${k}.png`)
+            document.getElementById(`cell${k}`).setAttribute('src', newCell.src)
+            document.getElementById(`cell${k}`).setAttribute('value', newCell.value)
+            document.getElementById(`cell${k}`).setAttribute('id', newCell.id)
+            // document.getElementById(`cell${k}`).innerHTML.src=(newCell.src)
             // document.getElementById(`cell${k}`).innerHTML.src=newCell.src
+            // document.getElementById(`cell${k}`).appendChild(newCell.src)
         }
             
             
     },
+    // Again for reference:
+    // cellGrid: [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
 
-    // gridLocations: function (cellGrid){
-
-    //     // apply X and Y grid coordinates to image object: 
-    //     // I think this needs to be rerun after every move
-    //     for (let i = 0; i < this.cellGrid.length; i++) {
-    //         let innerArrLen = this.cellGrid[i].length;
-    //         for (let j = 0; j < innerArrLen; j++) {
-    //             let newCell = this.cells.pop();
-    //             newCell.xposition = i;
-    //             newCell.yposition = j;
-    //             console.log(newCell)
-    //         }
-    //     }
-    // },
+    // apply X and Y grid coordinates to image object: 
+    // This needs to be rerun after every move
+    gridLocations: function (){
+        let dupCellArr  = this.cellArr.slice()
+        console.log(this.cellArr)
+        // console.log(dupCellArr)
+        for (let i = 0; i < this.cellGrid.length; i++) {
+            let innerArrLen = this.cellGrid[i].length;
+            for (let j = 0; j < innerArrLen; j++) {
+                let newCell = dupCellArr.shift();
+                newCell.xposition = i;
+                newCell.yposition = j;
+                // console.log(newCell)
+            }
+        }
+    },
                 
-                // document.querySelector('.cell-Img').setAttribute('src' , 'newCell.src')
-                // document.querySelector('.cell-Img').src=newCell.src
-                // let placeCell = document.querySelector('.cell-Img')
-                // placeCell.innerHTML(newCell.src)
-                
-                
-                
-                // // console.log(newCell)
-                // // for (let k=0; k<9;k++){
-                    // // let placeCell= document.getElementById(`cell${k}`)
-                    // placeCell.setAttribute('src', newCell.src);
-                    // placeCell.setAttribute('value', newCell.value);
-                    // placeCell.innerHTML.src=(`./images/image5.png`)
-                    // placeCell.innerHTML.src=(`./images/image${i}.png`)
-                    // placeCell.setAttribute('classList', 'cell-Img');
-                    // document.querySelector('div').appendChild(newCell)
-                    // console.log(`image value: ${newCell.value}`)
-                    // console.log(`image value: ${newCell.value}`)
-                    // }
-                
-
-// distributes shuffled cells to grid of cell containers:
-// this function has gotten way too bloated and is not working. going to start over with just the 2D array loop
-// dealCells: function (cellGrid) {
-//     // this.shuffleCells()
-//     for (let i = 0; i < this.cellGrid.length; i++) {
-//         let innerArrLen = this.cellGrid[i].length;
-//         for (let j = 0; j < innerArrLen; j++) {
-
-//             // sets img src for card images and returns last element in array
-//             // let newCell = this.cells.pop();
-//             // // console.log(newCell)
-//             // // for (let k=0; k<9;k++){
-//             // // let placeCell= document.getElementById(`cell${k}`)
-//             // let placeCell = document.querySelector('.cell')
-//             // placeCell.setAttribute('src', newCell.src);
-//             // placeCell.setAttribute('value', newCell.value);
-//             // placeCell.innerHTML.src=(`./images/image5.png`)
-//             // placeCell.innerHTML.src=(`./images/image${i}.png`)
-//             // placeCell.setAttribute('xposition', i);
-//             // placeCell.setAttribute('yposition', j);
-//             // placeCell.setAttribute('classList', 'cell-Img');
-//             // document.querySelector('div').appendChild(newCell)
-//             // console.log(`image value: ${newCell.value}`)
-//             // console.log(`image value: ${newCell.value}`)
-//             // }
-//         }
-//         // document.getElementById('img0').setAttribute('classList', 'cell-Empty');
-
-//     }
-//     // document.querySelector('value', 0)).setAttribute('class', 'cell-Empty');
-//     // }
-//     // }
-// },
 
     // console.log('--------------------------------------------------------------------------------------------------'),
 
+    // loop through cellGrid to find and return X coordinate:
+    findEmptyX: function () {
+        for (let i=0; i<this.cellArr.length;i++){
+           let tempCell=document.getElementById(`img${i}`)
+        //    console.log(typeof(tempCell))
+        //    console.log(tempCell)
 
-    // // how to loop through cellGrid to look for 
-    //     findEmpty: function (cellGrid) {
-    //         for (let i = 0; i < this.cellGrid.length; i++) {
-    //             let innerArrLen = this.cellGrid[i].length;
-    //             for (let j = 0; j < innerArrLen; j++) {
-    //                 console.log(`${i} , ${j}`)
-    //                 if (document.querySelector('.cell-Empty')) {
-    //                     console.log(`${i}, ${j}`)
-    //                     let emptyRow = i
-    //                     let emptyCol = j
-    //                     // return cellGrid [i][j]
-    //                 })
-    //             }
+        //    let tempCell=document.getElementById(`img${i}`)
+        //    console.log(typeof(tempCell))
+        //    console.log(tempCell)
+        //    console.log(tempCell.value)
+            // if (tempCell.value ==0){
+            // console.log(tempCell.xposition)
+            //     return tempCell.xposition
+            // }
+        }
+    },
+
+    // loop through cellGrid to find and return Y coordinate:
+    // findEmptyY: function () {
+    //     for (let i=0; i<this.cellArr.length;i++){
+    //        let tempCell=document.getElementById(`img${i}`)
+    //         if (tempCell.value ==0){
+    //         console.log(tempCell.yposition)
+    //             return tempCell.yposition
     //         }
     //     }
     // }
@@ -246,6 +219,8 @@ console.table(game.cellGrid)
 game.shuffleCells()
 // console.log(game.cells)
 game.dealCells()
+game.gridLocations()
+game.findEmptyX()
 // game.findEmpty()
 
 
@@ -269,26 +244,6 @@ game.dealCells()
 // function isEmpty(e) {
 //     console.log('this cell is empty')
 // }
-
-
-// findEmpty: function(cellGrid) {
-//             for (let i = 0; i < this.cellGrid.length; i++) {
-//                 let innerArrLen = this.cellGrid[i].length
-//                 for (let j = 0; j < innerArrLen; j++) {
-//                     console.log(`${i} , ${j}`)
-//                     if (document.querySelector('.cell-Empty')) {
-//                         // console.log(`${i}, ${j}`)
-//                         let emptyRow = i
-//                         let emptyCol = j
-//                         // return cellGrid [i][j]
-//                     }
-
-
-//             }
-//         }
-// }
-
-
 
 
 // Yesterday I got the initial game set up with 3x3 grid, labeled with their values, and have them distributing randomly (mostly). Built a 2D array that replicates game board. 
