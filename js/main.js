@@ -21,53 +21,20 @@ console.log('insanity check')
 // empty cell is identified by class & id applied upon creation, but not sure how to figure that out when images are randomly arranged
 // ^^querySelector to find ID
 
-// copying the syntax structure from high card game & poke-a-square:
-
-
-// const createCells =(numberOfSquares) => {
-//     // create cells container
-//     const cellContainer = document.createElement('div');
-//     container.setAttribute('class', 'container');
-//     document.body.appendChild(container)
-//     // create cells
-//     for (let i=0; i<9;i++){
-//         let cell = document.createElement('img');
-//         cell.setAttribute('class', 'cell-Empty');
-//         cell.setAttribute('src', `./images/empty.png`);
-//         container.appendChild(cell);
-//     }
-// }
-
-// grid positions of the cells 
-
-// let cellGrid = [[0,1,2], [3,4,5], [6,7,8]];
-// // how to loop through cellGrid to look for 
-// for (let i =0; i<cellGrid.length;i++){
-//     let innerArrLen = cellGrid[i].length;
-//     for (let j=0; j<innerArrLen; j++){
-//         // console.log(`${i} , ${j}`)
-//         if (document.querySelector('.cell-Empty')){
-//             console.log(`i, j`)
-//             // return cellGrid [i][j]
-//         }
-//     }
-// }
-
-
 let container = document.createElement('div');
 container.setAttribute('class', 'container');
 document.body.appendChild(container)
 
 // /*
 let game = {
-// number of player moves:
+    // number of player moves:
     moves: 0,
-// 2D array representing the game board locations:
-// this is used to cycle through to keep track of empty cell location:
+    // 2D array representing the game board locations:
+    // this is used to cycle through to keep track of empty cell location:
     cellGrid: [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
-// game array:
+    // game array:
     cellArr: [],
-    
+
     // creates divs containers for images:
     //apply images with innerHTML- though this doesn't seem to be working
     createCellDivs: function () {
@@ -76,7 +43,7 @@ let game = {
             let cell = document.createElement('div');
             cell.setAttribute('classList', 'cell-Empty');
             cell.setAttribute('id', `cellDiv${i}`)
-            let cellImg =document.createElement('img')
+            let cellImg = document.createElement('img')
             cellImg.setAttribute('src', `./images/empty.png`);
             cellImg.setAttribute('class', 'cell-Img');
             cellImg.setAttribute('id', `cell${i}`)
@@ -96,7 +63,7 @@ let game = {
         // console.log(this.cells)
     },
 
-// shuffles cells array so they are in random order, done at the start of the game:
+    // shuffles cells array so they are in random order, done at the start of the game:
     shuffleCells: function () {
         // this.getCells()
         for (let i = (this.cellArr.length - 1); i > 0; i--) {
@@ -109,11 +76,11 @@ let game = {
         // console.log('--------------------------------------------------------------------------------------------------'),
     },
 
-// distributes shuffled cells to grid of cell containers at the start of the game:
+    // distributes shuffled cells to grid of cell containers at the start of the game:
     dealCells: function () {
         // this.shuffleCells()
         // linear array to apply image objects to div cell containers:
-        for (let k=0; k<this.cellArr.length;k++){
+        for (let k = 0; k < this.cellArr.length; k++) {
             let newCell = this.cellArr[k];
             // console.log(newCell)
             // console.log(newCell.src)
@@ -121,208 +88,233 @@ let game = {
             document.getElementById(`cell${k}`).setAttribute('value', newCell.value)
             document.getElementById(`cell${k}`).setAttribute('id', newCell.id)
         }
-    },     
-            
-        
-        // apply X and Y grid coordinates to image object: 
-        // This needs to be rerun after every move
-    gridLocations: function (){
-            // make a duplicate of the shuffled card images array to leave the original intact
-            let dupCellArr  = this.cellArr.slice()
-            // console.log(dupCellArr)
-            for (let i = 0; i < this.cellGrid.length; i++) {
-                let innerArrLen = this.cellGrid[i].length;
-                for (let j = 0; j < innerArrLen; j++) {
-                    let newCell = dupCellArr.shift();
-                    newCell.xposition = j;
-                    newCell.yposition = i;
-                }
+    },
+
+
+    // apply X and Y grid coordinates to image object: 
+    // This needs to be rerun after every move
+    gridLocations: function () {
+        // make a duplicate of the shuffled card images array to leave the original intact
+        let dupCellArr = this.cellArr.slice()
+        // console.log(dupCellArr)
+        for (let i = 0; i < this.cellGrid.length; i++) {
+            let innerArrLen = this.cellGrid[i].length;
+            for (let j = 0; j < innerArrLen; j++) {
+                let newCell = dupCellArr.shift();
+                newCell.xposition = j;
+                newCell.yposition = i;
             }
-        },
-        
-        // adjustable variables for X and Y coordinates of empty cell:
-        emptyX: "",
-        emptyY: "",
-        
-        // loop through cellArr to find and return X and Y coordinates:
-        findEmpty: function () {
-            // console.log(this.cellArr)
-            for (let i=0; i<this.cellArr.length;i++){
-                let tempCell=this.cellArr[i]
-                // console.log(tempCell.value)
-                if (tempCell.value==0){
-                    // console.log(tempCell.xposition)
-                    this.emptyX= tempCell.xposition
-                    this.emptyY= tempCell.yposition
-                } 
+        }
+    },
+
+    // adjustable variables for X and Y coordinates of empty cell:
+    emptyX: "",
+    emptyY: "",
+
+    // loop through cellArr to find and return X and Y coordinates:
+    findEmpty: function () {
+        // console.log(this.cellArr)
+        for (let i = 0; i < this.cellArr.length; i++) {
+            let tempCell = this.cellArr[i]
+            // console.log(tempCell.value)
+            if (tempCell.value == 0) {
+                // console.log(tempCell.xposition)
+                this.emptyX = tempCell.xposition
+                this.emptyY = tempCell.yposition
             }
-        
-        
+        }
+
+
     },
 
     // Larger 2D array for reference:
-    cellGrid2: [[0, 1, 2, 3], [4, 5, 6, 7, ], [8, 9 , 10, 11, ], [12, 13, 14, 15, ]],
-    
-    // first adjacent coords:
-    adjX_1:"",
-    adjY_1:"",
-    
-    // second adjacent coords:
-    adjX_2:"",
-    adjY_2:"",
-    
-    // third adjacent coords:
-    adjX_3:"",
-    adjY_3:"",
-    
-    // fourth adjacent coords:
-    adjX_4:"",
-    adjY_4:"",
-// use empty X and Y coordinates to identify which cells are adjacent to empty:
-    labelAdjacent: function(){
-        for (let i=0; i<this.cellArr.length;i++){
+    cellGrid2: [[0, 1, 2, 3], [4, 5, 6, 7,], [8, 9, 10, 11,], [12, 13, 14, 15,]],
+
+    // variables for first adjacent coords:
+    adjX_1: "",
+    adjY_1: "",
+
+    // variables for second adjacent coords:
+    adjX_2: "",
+    adjY_2: "",
+
+    // variable for third adjacent coords:
+    adjX_3: "",
+    adjY_3: "",
+
+    // variable for fourth adjacent coords:
+    adjX_4: "",
+    adjY_4: "",
+    // use empty X and Y coordinates to identify which cells are adjacent to empty:
+    labelAdjacentCoord: function () {
+        for (let i = 0; i < this.cellArr.length; i++) {
             // need nine conditionals to deal with all possible locations(X max, X min, Y max, Y min, and in the field)
-            
             // upper left corner:
-            if (this.emptyX==0 && this.emptyY==0){
-            // first adjacent coords:
-            this.adjX_1==this.emptyX+1
-            this.adjY_1==this.emptyY
-            // second adjacent coords:
-            this.adjX_2==this.emptyX
-            this.adjY_2==this.emptyX+1
-            // third adjacent coords:
-            this.adjX_3==null
-            this.adjY_3==null
-            // fourth adjacent coords:
-             this.adjX_4==null
-             this.adjY_4==null
+            if (this.emptyX === 0 && this.emptyY === 0) {
+                // console.log('upper left')
+                // first adjacent coords:
+                this.adjX_1 = this.emptyX + 1
+                this.adjY_1 = this.emptyY
+                // second adjacent coords:
+                this.adjX_2 = this.emptyX
+                this.adjY_2 = this.emptyY + 1
+                // third adjacent coords:
+                this.adjX_3 = null
+                this.adjY_3 = null
+                // fourth adjacent coords:
+                this.adjX_4 = null
+                this.adjY_4 = null
             }
             // lower left corner:
-            else if (this.emptyX==0 && this.emptyY==this.cellGrid.length){
-            // first adjacent coords:
-            this.adjX_1==this.emptyX+1
-            this.adjY_1==this.emptyY
-            // second adjacent coords:
-            this.adjX_2==this.emptyX
-            this.adjY_2==this.emptyX+1
-            // third adjacent coords:
-            this.adjX_3==this.emptyX+1
-            this.adjY_3==this.emptyX+1
-            // fourth adjacent coords:
-             this.adjX_4==this.emptyX+1
-             this.adjY_4==this.emptyX+1  
+            else if (this.emptyX === 0 && this.emptyY === this.cellGrid.length - 1) {
+                // console.log('lower left')
+                // first adjacent coords:
+                this.adjX_1 = this.emptyX + 1
+                this.adjY_1 = this.emptyY
+                // second adjacent coords:
+                this.adjX_2 = this.emptyX
+                this.adjY_2 = this.emptyY - 1
+                // third adjacent coords:
+                this.adjX_3 = null
+                this.adjY_3 = null
+                // fourth adjacent coords:
+                this.adjX_4 = null
+                this.adjY_4 = null
             }
             // upper right corner:
-            else if (this.emptyX==this.cellGrid.length && this.emptyY==0){
-            // first adjacent coords:
-            this.adjX_1==this.emptyX+1
-            this.adjY_1==this.emptyY
-            // second adjacent coords:
-            this.adjX_2==this.emptyX
-            this.adjY_2==this.emptyX+1
-            // third adjacent coords:
-            this.adjX_3==this.emptyX+1
-            this.adjY_3==this.emptyX+1
-            // fourth adjacent coords:
-             this.adjX_4==this.emptyX+1
-             this.adjY_4==this.emptyX+1    
+            else if (this.emptyX === this.cellGrid.length - 1 && this.emptyY === 0) {
+                // console.log('upper right')
+                // first adjacent coords:
+                this.adjX_1 = this.emptyX - 1
+                this.adjY_1 = this.emptyY
+                // second adjacent coords:
+                this.adjX_2 = this.emptyX
+                this.adjY_2 = this.emptyY + 1
+                // third adjacent coords:
+                this.adjX_3 = null
+                this.adjY_3 = null
+                // fourth adjacent coords:
+                this.adjX_4 = null
+                this.adjY_4 = null
             }
             // lower right corner:
-            else if (this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
-            // first adjacent coords:
-            this.adjX_1==this.emptyX+1
-            this.adjY_1==this.emptyY
-            // second adjacent coords:
-            this.adjX_2==this.emptyX
-            this.adjY_2==this.emptyX+1
-            // third adjacent coords:
-            this.adjX_3==this.emptyX+1
-            this.adjY_3==this.emptyX+1
-            // fourth adjacent coords:
-            this.adjX_4==this.emptyX+1
-            this.adjY_4==this.emptyX+1    
+            else if (this.emptyX === this.cellGrid.length - 1 && this.emptyY === this.cellGrid.length - 1) {
+                // console.log('lower right')
+                // first adjacent coords:
+                this.adjX_1 = this.emptyX - 1
+                this.adjY_1 = this.emptyY
+                // second adjacent coords:
+                this.adjX_2 = this.emptyX
+                this.adjY_2 = this.emptyY - 1
+                // third adjacent coords:
+                this.adjX_3 = null
+                this.adjY_3 = null
+                // fourth adjacent coords:
+                this.adjX_4 = null
+                this.adjY_4 = null
             }
             // left edge:
-            else if(this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
-            // first adjacent coords:
-            this.adjX_1==this.emptyX+1
-            this.adjY_1==this.emptyY
-            // second adjacent coords:
-            this.adjX_2==this.emptyX
-            this.adjY_2==this.emptyX+1
-            // third adjacent coords:
-            this.adjX_3==this.emptyX+1
-            this.adjY_3==this.emptyX+1
-            // fourth adjacent coords:
-             this.adjX_4==this.emptyX+1
-             this.adjY_4==this.emptyX+1     
+            else if (this.emptyX === 0) {
+                // console.log('left edge')
+                // first adjacent coords:
+                this.adjX_1 = this.emptyX
+                this.adjY_1 = this.emptyY - 1
+                // second adjacent coords:
+                this.adjX_2 = this.emptyX + 1
+                this.adjY_2 = this.emptyY
+                // third adjacent coords:
+                this.adjX_3 = this.emptyX
+                this.adjY_3 = this.emptyY + 1
+                // fourth adjacent coords:
+                this.adjX_4 = null
+                this.adjY_4 = null
             }
             // right edge:
-            else if(this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
-            // first adjacent coords:
-            this.adjX_1==this.emptyX+1
-            this.adjY_1==this.emptyY
-            // second adjacent coords:
-            this.adjX_2==this.emptyX
-            this.adjY_2==this.emptyX+1
-            // third adjacent coords:
-            this.adjX_3==this.emptyX+1
-            this.adjY_3==this.emptyX+1
-            // fourth adjacent coords:
-             this.adjX_4==this.emptyX+1
-             this.adjY_4==this.emptyX+1     
+            else if (this.emptyX === this.cellGrid.length - 1) {
+                // console.log('right edge')
+                // first adjacent coords:
+                this.adjX_1 = this.emptyX
+                this.adjY_1 = this.emptyY - 1
+                // second adjacent coords:
+                this.adjX_2 = this.emptyX - 1
+                this.adjY_2 = this.emptyY
+                // third adjacent coords:
+                this.adjX_3 = this.emptyX
+                this.adjY_3 = this.emptyY + 1
+                // fourth adjacent coords:
+                this.adjX_4 = null
+                this.adjY_4 = null
             }
             // top edge:
-            else if(this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
-            // first adjacent coords:
-            this.adjX_1==this.emptyX+1
-            this.adjY_1==this.emptyY
-            // second adjacent coords:
-            this.adjX_2==this.emptyX
-            this.adjY_2==this.emptyX+1
-            // third adjacent coords:
-            this.adjX_3==this.emptyX+1
-            this.adjY_3==this.emptyX+1
-            // fourth adjacent coords:
-             this.adjX_4==this.emptyX+1
-             this.adjY_4==this.emptyX+1     
+            else if (this.emptyY === 0) {
+                // console.log('top edge')
+                // first adjacent coords:
+                this.adjX_1 = this.emptyX - 1
+                this.adjY_1 = this.emptyY
+                // second adjacent coords:
+                this.adjX_2 = this.emptyX
+                this.adjY_2 = this.emptyY + 1
+                // third adjacent coords:
+                this.adjX_3 = this.emptyX + 1
+                this.adjY_3 = this.emptyY
+                // fourth adjacent coords:
+                this.adjX_4 = null
+                this.adjY_4 = null
             }
             // bottom edge:
-            else if(this.emptyX==this.cellGrid.length && this.emptyY==this.cellGrid.length){
-            // first adjacent coords:
-            this.adjX_1==this.emptyX+1
-            this.adjY_1==this.emptyY
-            // second adjacent coords:
-            this.adjX_2==this.emptyX
-            this.adjY_2==this.emptyX+1
-            // third adjacent coords:
-            this.adjX_3==this.emptyX+1
-            this.adjY_3==this.emptyX+1
-            // fourth adjacent coords:
-             this.adjX_4==this.emptyX+1
-             this.adjY_4==this.emptyX+1     
+            else if (this.emptyY === this.cellGrid.length - 1) {
+                // console.log('bottom edge')
+                // first adjacent coords:
+                this.adjX_1 = this.emptyX - 1
+                this.adjY_1 = this.emptyY
+                // second adjacent coords:
+                this.adjX_2 = this.emptyX
+                this.adjY_2 = this.emptyY - 1
+                // third adjacent coords:
+                this.adjX_3 = this.emptyX + 1
+                this.adjY_3 = this.emptyY
+                // fourth adjacent coords:
+                this.adjX_4 = null
+                this.adjY_4 = null
             }
             // in the field:
             else {
-            // first adjacent coords:
-            this.adjX_1==this.emptyX+1
-            this.adjY_1==this.emptyY
-            // second adjacent coords:
-            this.adjX_2==this.emptyX
-            this.adjY_2==this.emptyX+1
-            // third adjacent coords:
-            this.adjX_3==this.emptyX+1
-            this.adjY_3==this.emptyX+1
-            // fourth adjacent coords:
-             this.adjX_4==this.emptyX+1
-             this.adjY_4==this.emptyX+1     
+                // first adjacent coords:
+                // console.log('in the field')
+                this.adjX_1 = this.emptyX + 1
+                this.adjY_1 = this.emptyY
+                // second adjacent coords:
+                this.adjX_2 = this.emptyX
+                this.adjY_2 = this.emptyY + 1
+                // third adjacent coords:
+                this.adjX_3 = this.emptyX - 1
+                this.adjY_3 = this.emptyY
+                // fourth adjacent coords:
+                this.adjX_4 = this.emptyX
+                this.adjY_4 = this.emptyY - 1
             }
 
-      
+
 
         }
-    }
+    },
+    // repeated for reference:
+    // cellGrid: [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
+
+    // use adj X and Y coords as to locate which cells should be allowed to be clickable when selecting from cellGrid:
+
+    // adjacentCell_1: this.cellGrid[adjX_1][adjY_1],
+    // adjacentCell_1: this.cellGrid[this.adjX_1][this.adjY_1],
+    // adjCell_2: this.cellGrid[this.adjX_2][this.adjY_2],
+    // adjCell_3: this.cellGrid[this.adjX_3][this.adjY_3],
+    // adjCell_4: this.cellGrid[this.adjX_4][this.adjY_4],
+
+    // adjCell_1: "",
+    // adjCell_2: "",
+    // adjCell_3: "",
+    // adjCell_4: "",
+    // 
+
 
     // document.querySelector('.cell-Empty').addEventListener('click', isEmpty)
     // function isEmpty(e) {
@@ -341,14 +333,27 @@ let game = {
 
 game.createCellDivs()
 game.getCells()
-console.table(game.cellGrid2)
+console.table(game.cellGrid)
 game.shuffleCells()
 game.dealCells()
 game.gridLocations()
 game.findEmpty()
+game.labelAdjacentCoord()
 
 console.log(`Empty cell X coordiante: ${game.emptyX}`)
 console.log(`Empty cell Y coordiante: ${game.emptyY}`)
+console.log('----------------------------------------------')
+console.log(`Adjacent coordinates1: ${game.adjX_1}, ${game.adjY_1}`)
+console.log(`Adjacent coordinates2: ${game.adjX_2}, ${game.adjY_2}`)
+console.log(`Adjacent coordinates3: ${game.adjX_3}, ${game.adjY_3}`)
+console.log(`Adjacent coordinates4: ${game.adjX_4}, ${game.adjY_4}`)
+console.log('----------------------------------------------')
+console.log(`Adjacent cell1 (manually entered): ${game.cellGrid[1][2]}`)
+// console.log(`Adjacent cell1: ${game.cellGrid[game.adjX_1][game.adjY_1]}`)
+// console.log(`Adjacent cell1: ${game.adjacentCell_1}`)
+// console.log(`Adjacent cell2: ${game.adjCell_2}`)
+// console.log(`Adjacent cell3: ${game.adjCell_3}`)
+// console.log(`Adjacent cell4: ${game.adjCell_4}`)
 
 
 // add event listeners to determine if cells are movable
