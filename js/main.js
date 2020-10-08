@@ -33,10 +33,11 @@ document.querySelector('.game-frame').appendChild(container)
 let game = {
     // number of player moves:
     moves: 0,
-    // 2D array representing the game board locations:
+    // array representing the game board locations:
     gridArr: [],
-    // length of grid array
-    gridLen: 0,
+    // total number of cells in grid array
+    gridArrLen: 0,
+    // length of one side of the grid
     // array used to store image objects with source, value, and id keys:
     cellArr: [],
 
@@ -46,7 +47,7 @@ let game = {
     fillGridArr: function(){
         for (let i =0; i<9;i++){
             this.gridArr.push(i)
-            this.gridLen++
+            this.gridArrLen++
         }
     },
 
@@ -105,17 +106,54 @@ let game = {
             document.getElementById(`cell${k}`).setAttribute('id', newCell.id)
         }
     },
-
+    // find the empty cell:
     findEmpty: function(){
-        for(let i=0;i<this.gridLen;i++){
+        for(let i=0;i<this.gridArrLen;i++){
             let tempCell = this.cellArr[i]
             // console.log(tempCell.value)
             if (tempCell.value == 0) {
                this.emptyLoc=i
             }
         }
-    }
+    },
 
+    // adjacent cell variables:
+    // adjAbove: 0,
+    // adjBelow: 0,
+    // adjRight: 0,
+    // adjLeft: 0,
+
+    // adjAbove: this.emptyLoc-(Math.sqrt(this.gridArrLen)),
+    // adjBelow: this.emptyLoc+(Math.sqrt(this.gridArrLen)),
+    // adjRight: this.emptyLoc+1,
+    // adjLeft: this.emptyLoc-1,
+    
+
+    
+
+    // using emptyLoc, find adjacent (and clickable) cells:
+    findAdj: function(){
+        // figure out length of one side of grid:
+        let gridSide=Math.sqrt(this.gridArrLen)
+
+        // for (let i=0;i<this.gridArrLen;i++){
+            this.adjAbove=this.emptyLoc-gridSide
+            this.adjBelow=this.emptyLoc+gridSide
+            this.adjRight=this.emptyLoc+1
+            this.adjleft=this.emptyLoc-1
+
+
+
+
+
+        // }
+        
+        
+        // console.log(gridSide)
+        // if (this.emptyLoc)
+        // this.gridArrLen
+        // this.emptyLoc
+    }
 
 
 
@@ -124,14 +162,21 @@ let game = {
 
 
 game.fillGridArr()
-console.log(game.gridArr)
+// console.log(game.gridArr)
 
 game.createCellDivs()
 game.getCells()
 game.shuffleCells()
 game.dealCells()
 game.findEmpty()
+// game.findAdj()
 console.log(`Empty location: ${game.emptyLoc}`)
+console.log(`Type of Empty location: ${typeof(game.emptyLoc)}`)
+
+// console.log(`Adjacent above cell: ${game.adjAbove}`)
+// console.log(`Adjacent below cell: ${game.adjBelow}`)
+// console.log(`Adjacent left cell: ${game.adjLeft}`)
+// console.log(`Adjacent right cell: ${game.adjRight}`)
 
 
 
