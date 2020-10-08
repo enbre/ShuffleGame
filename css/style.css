@@ -1,7 +1,18 @@
 * {
     box-sizing: border-box;
 }
+body{
+    background-color:#b3defa;
+}
+main{
+    background-color: #2f3974;
+    width: 700px;
+    height: 800px;
+    border-radius: 60px;
+    align-content: center;
+    margin: 75px auto 0 auto;
 
+}
 .container {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -10,7 +21,7 @@
     height: 620px;
     border: 1px solid black;
     padding: 5px;
-    /* background-color: darkgrey; */
+    background-color: #7b81c7;
 }
 
 /* from CSS generator website: https://cssgrid-generator.netlify.app/ */
@@ -28,41 +39,41 @@
     width: 200px;
     height: 200px;
     border: 0.5px solid grey;
-    background-color: cadetblue;
+    /* background-color: cadetblue; */
     padding: 2px;
 }
-/* .cell-Adj {
+.cell-Adj {
     justify-self: center;
     align-self: center;
     width: 200px;
     height: 200px;
-    border: 1px solid grey;
-    background-color: cadetblue;
+    /* border: 1px solid grey; */
+    /* background-color: cadetblue; */
     padding: 2px;
-} */
+}
 .cell-Empty {
     justify-self: center;
     align-self: center;
     width: 200px;
     height: 200px;
-    border: 1px solid orangered;
-    /* background-image: url('../images/empty.png'); */
+    /* border: 1px solid grey; */
+    background-image: url('../images/empty.png');
     padding: 2px;
 
 }
-/* .cell {
+.cell {
     justify-self: center;
     align-self: center;
     width: 200px;
     height: 200px;
-    border: 1px solid orangered;
-    background-color: cadetblue;
+    /* border: 1px solid grey; */
+    /* background-color: cadetblue; */
     padding: 2px;
-} */
+}
 /* taken from box-model-blog: */
-.button{
+/* .button{ */
     /* removes underline from anchor tags */
-    text-decoration: none;
+    /* text-decoration: none;
     background-color: cornflowerblue;
     color: white;
     padding: 10px 20px;
@@ -73,4 +84,4 @@
 .button:hover{
     filter:brightness(130%)
 }
-
+ */

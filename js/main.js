@@ -41,11 +41,12 @@ let game = {
         // create cells
         for (let i = 0; i < 9; i++) {
             let cell = document.createElement('div');
-            cell.setAttribute('classList', 'cell-Empty');
+            cell.setAttribute('class', 'cell');
             cell.setAttribute('id', `cellDiv${i}`)
             let cellImg = document.createElement('img')
             cellImg.setAttribute('src', `./images/empty.png`);
             cellImg.setAttribute('class', 'cell-Img');
+            cellImg.setAttribute('classList', 'cell-Empty');
             cellImg.setAttribute('id', `cell${i}`)
             container.appendChild(cell);
             cell.appendChild(cellImg);
@@ -90,7 +91,6 @@ let game = {
         }
     },
 
-
     // apply X and Y grid coordinates to image object: 
     // This needs to be rerun after every move
     gridLocations: function () {
@@ -128,7 +128,7 @@ let game = {
     },
 
     // Larger 2D array for reference:
-    cellGrid2: [[0, 1, 2, 3], [4, 5, 6, 7,], [8, 9, 10, 11,], [12, 13, 14, 15,]],
+    // cellGrid2: [[0, 1, 2, 3], [4, 5, 6, 7,], [8, 9, 10, 11,], [12, 13, 14, 15,]],
 
     // variables for first adjacent coords:
     adjX_1: "",
@@ -293,10 +293,11 @@ let game = {
                 this.adjX_4 = this.emptyX
                 this.adjY_4 = this.emptyY - 1
             }
-
-
-
         }
+        // console.log(`Adjacent cell 1: ${this.cellGrid[this.adjX_1][this.adjY_1]}`)
+        // console.log(`Adjacent cell 2: ${this.cellGrid[this.adjX_2][this.adjY_2]}`)
+        // console.log(`Adjacent cell 3: ${this.cellGrid[this.adjX_3][this.adjY_3]}`)
+        // console.log(`Adjacent cell 4: ${this.cellGrid[this.adjX_4][this.adjY_4]}`)
     },
     // repeated for reference:
     // cellGrid: [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
@@ -304,16 +305,27 @@ let game = {
     // use adj X and Y coords as to locate which cells should be allowed to be clickable when selecting from cellGrid:
 
     // adjacentCell_1: this.cellGrid[adjX_1][adjY_1],
+    // adjacentCell_1: this.cellGrid[0]
     // adjacentCell_1: this.cellGrid[this.adjX_1][this.adjY_1],
-    // adjCell_2: this.cellGrid[this.adjX_2][this.adjY_2],
-    // adjCell_3: this.cellGrid[this.adjX_3][this.adjY_3],
-    // adjCell_4: this.cellGrid[this.adjX_4][this.adjY_4],
+    // adjacentCell_2: this.cellGrid[this.adjX_2][this.adjY_2],
+    // adjacentCell_3: this.cellGrid[this.adjX_3][this.adjY_3],
+    // adjacentCell_4: this.cellGrid[this.adjX_4][this.adjY_4],
 
-    // adjCell_1: "",
-    // adjCell_2: "",
-    // adjCell_3: "",
-    // adjCell_4: "",
-    // 
+
+    
+
+    // use adjacentCell #s to match to cell div #s, toggle classList of those cells to .cell-Adj, and use querySelectorAll to 
+
+
+
+
+
+
+
+
+
+
+
 
 
     // document.querySelector('.cell-Empty').addEventListener('click', isEmpty)
@@ -348,21 +360,29 @@ console.log(`Adjacent coordinates2: ${game.adjX_2}, ${game.adjY_2}`)
 console.log(`Adjacent coordinates3: ${game.adjX_3}, ${game.adjY_3}`)
 console.log(`Adjacent coordinates4: ${game.adjX_4}, ${game.adjY_4}`)
 console.log('----------------------------------------------')
-console.log(`Adjacent cell1 (manually entered): ${game.cellGrid[1][2]}`)
-// console.log(`Adjacent cell1: ${game.cellGrid[game.adjX_1][game.adjY_1]}`)
-// console.log(`Adjacent cell1: ${game.adjacentCell_1}`)
-// console.log(`Adjacent cell2: ${game.adjCell_2}`)
-// console.log(`Adjacent cell3: ${game.adjCell_3}`)
-// console.log(`Adjacent cell4: ${game.adjCell_4}`)
+// console.log(`Adjacent cell1 (manually entered): ${game.cellGrid[1][2]}`)
+// console.log(`Adjacent cell 1: ${game.cellGrid[game.adjX_1][game.adjY_1]}`)
+// console.log(`Adjacent cell 2: ${game.cellGrid[game.adjX_2][game.adjY_2]}`)
+// console.log(`Adjacent cell 3: ${game.cellGrid[game.adjX_3][game.adjY_3]}`)
+// console.log(`Adjacent cell 4: ${game.cellGrid[game.adjX_4][game.adjY_4]}`)
+// // console.log(`Adjacent cell1: ${game.adjacentCell_1}`)
+// console.log(`Adjacent cell2: ${game.adjacentCell_2}`)
+// console.log(`Adjacent cell3: ${game.adjacentCell_3}`)
+// console.log(`Adjacent cell4: ${game.adjacentCell_4}`)
+
+
+
+document.getElementById("img4").classList.toggle("cell-Empty");
+
 
 
 // add event listeners to determine if cells are movable
-// document.querySelectorAll('.cell-Img').forEach(e => {
-//     e.addEventListener('click', isNotMovable)
-//     function isNotMovable(e) {
-//         console.log('this cell is not movable')
-//     }
-// })
+document.querySelectorAll('.cell-Img').forEach(e => {
+    e.addEventListener('click', isNotMovable)
+    function isNotMovable(e) {
+        console.log('this cell is not movable')
+    }
+})
 
 
 // document.querySelectorAll('.cell-Adj').forEach(e =>{
@@ -386,6 +406,7 @@ console.log(`Adjacent cell1 (manually entered): ${game.cellGrid[1][2]}`)
 // done, via value of 0, not class
     // locate which cells are adjacent to empty cell (above, right, left, bottom)
     // based on 2D array empty cell location, each cell +/- 1 in X and Y axis
+    // done
 // change the class of those adjacent cells to '.cell-Adj' 
 // apply 'click' listener event to adjacent cells to allow them to be clicked
 // for each move, increase the total number of moves made on the 'moves' tracker
