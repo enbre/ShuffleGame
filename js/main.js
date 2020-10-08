@@ -21,9 +21,14 @@ console.log('insanity check')
 // empty cell is identified by class & id applied upon creation, but not sure how to figure that out when images are randomly arranged
 // ^^querySelector to find ID
 
+let gameFrame = document.createElement('main');
+gameFrame.setAttribute('class', 'game-frame');
+document.querySelector('body').appendChild(gameFrame)
+// document.body.appendChild(gameFrame)
+
 let container = document.createElement('div');
 container.setAttribute('class', 'container');
-document.body.appendChild(container)
+document.querySelector('.game-frame').appendChild(container)
 
 // /*
 let game = {
@@ -294,7 +299,7 @@ let game = {
                 this.adjY_4 = this.emptyY - 1
             }
         }
-        // console.log(`Adjacent cell 1: ${this.cellGrid[this.adjX_1][this.adjY_1]}`)
+        console.log(`Adjacent cell 1: ${this.cellGrid[this.adjX_1][this.adjY_1]}`)
         // console.log(`Adjacent cell 2: ${this.cellGrid[this.adjX_2][this.adjY_2]}`)
         // console.log(`Adjacent cell 3: ${this.cellGrid[this.adjX_3][this.adjY_3]}`)
         // console.log(`Adjacent cell 4: ${this.cellGrid[this.adjX_4][this.adjY_4]}`)
@@ -355,13 +360,13 @@ game.labelAdjacentCoord()
 console.log(`Empty cell X coordiante: ${game.emptyX}`)
 console.log(`Empty cell Y coordiante: ${game.emptyY}`)
 console.log('----------------------------------------------')
-console.log(`Adjacent coordinates1: ${game.adjX_1}, ${game.adjY_1}`)
-console.log(`Adjacent coordinates2: ${game.adjX_2}, ${game.adjY_2}`)
-console.log(`Adjacent coordinates3: ${game.adjX_3}, ${game.adjY_3}`)
-console.log(`Adjacent coordinates4: ${game.adjX_4}, ${game.adjY_4}`)
+console.log(`Adjacent coordinates1 (X: ${game.adjX_1}, Y:${game.adjY_1})`)
+console.log(`Adjacent coordinates2 (X: ${game.adjX_2}, Y:${game.adjY_2})`)
+console.log(`Adjacent coordinates3 (X: ${game.adjX_3}, Y:${game.adjY_3})`)
+console.log(`Adjacent coordinates4 (X: ${game.adjX_4}, Y:${game.adjY_4})`)
 console.log('----------------------------------------------')
 // console.log(`Adjacent cell1 (manually entered): ${game.cellGrid[1][2]}`)
-// console.log(`Adjacent cell 1: ${game.cellGrid[game.adjX_1][game.adjY_1]}`)
+console.log(`Adjacent cell 1: ${game.cellGrid[game.adjX_1][game.adjY_1]}`)
 // console.log(`Adjacent cell 2: ${game.cellGrid[game.adjX_2][game.adjY_2]}`)
 // console.log(`Adjacent cell 3: ${game.cellGrid[game.adjX_3][game.adjY_3]}`)
 // console.log(`Adjacent cell 4: ${game.cellGrid[game.adjX_4][game.adjY_4]}`)

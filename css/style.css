@@ -1,16 +1,23 @@
 * {
     box-sizing: border-box;
+    margin: 0;
 }
 body{
     background-color:#b3defa;
 }
-main{
+.game-frame{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #2f3974;
     width: 700px;
     height: 800px;
     border-radius: 60px;
-    align-content: center;
-    margin: 75px auto 0 auto;
+    /* margin-top: -400px; */
+
+    /* align-content: center; */
+    margin: 0 auto;
+    /* margin: 75px auto 0 auto; */
 
 }
 .container {
@@ -40,7 +47,6 @@ main{
     height: 200px;
     border: 0.5px solid grey;
     /* background-color: cadetblue; */
-    padding: 2px;
 }
 .cell-Adj {
     justify-self: center;
@@ -49,7 +55,6 @@ main{
     height: 200px;
     /* border: 1px solid grey; */
     /* background-color: cadetblue; */
-    padding: 2px;
 }
 .cell-Empty {
     justify-self: center;
@@ -58,7 +63,6 @@ main{
     height: 200px;
     /* border: 1px solid grey; */
     background-image: url('../images/empty.png');
-    padding: 2px;
 
 }
 .cell {
@@ -68,7 +72,6 @@ main{
     height: 200px;
     /* border: 1px solid grey; */
     /* background-color: cadetblue; */
-    padding: 2px;
 }
 /* taken from box-model-blog: */
 /* .button{ */
