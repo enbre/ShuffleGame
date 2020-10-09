@@ -108,7 +108,6 @@ function dealCells() {
         tempCell.setAttribute('src', newCell.src)
         tempCell.setAttribute('value', newCell.value)
         tempCell.setAttribute('id', newCell.id)
-        // tempCell.addEventListener('click', swapImg)
         tempCell.addEventListener('click', isMovable)
 
     }
@@ -124,48 +123,84 @@ function findEmpty() {
     }
 };
 
-
-
-// function isMovable(value) {
+// conditional that determines which cells are movable:
 function isMovable(e) {
     // value of clicked cell div:
-    let clickedCellVal =(parseInt(e.target.parentElement.id.charAt(7)))
+    let clickedCellVal = (parseInt(e.target.parentElement.id.charAt(7)))
     // console.log(`clicked cell index: ${clickedCellVal}`)
     // image element:
-    let clickedImgCell =(e.target)
+    let clickedImgCell = (e.target)
     // value of image element
     // let clickedImgCellVal =(e.target.id.charAt(3))
-    let clickedImgCellVal =(parseInt(e.target.id.charAt(3)))
+    let clickedImgCellVal = (parseInt(e.target.id.charAt(3)))
     // image element source:
-    let clickedImgSrc =(`./images/image${clickedImgCellVal}.png`)
-
+    let clickedImgSrc = (`./images/image${clickedImgCellVal}.png`)
     // console.log(clickedImgSrc)
 
-
-    if (emptyLoc===0){
-        emptyCell=document.getElementById('cellDiv0').firstChild
-        // emptyCell=document.getElementById('cellDiv0').firstElementChild.src
-        // emptyCell=document.getElementById('img0').parentElement
-        // console.log(emptyCell)
-
-
-        // if (clickedCellVal===1|| clickedImgCellVal===3){
-        if (clickedCellVal===1||clickedCellVal===3){
-                // swap cellDiv1 (clicked) with cell 0 (empty):
-                clickedImgCell.setAttribute('src', './images/image0.png')
-                clickedImgCell.setAttribute('value', 0)
-                clickedImgCell.setAttribute('id', 'img0')
-                emptyCell.setAttribute('src', clickedImgSrc)
-                emptyCell.setAttribute('value', clickedImgCellVal)
-                emptyCell.setAttribute('id', `img${clickedImgCellVal}`)
-
-            // console.log('this cell is movable!')
-        }
-        // else if (clickedCellVal===3){
-
-
+    // swaps image, value, and id from clicked cell to empty cell:
+    function swapImg() {
+        clickedImgCell.setAttribute('src', './images/image0.png')
+        clickedImgCell.setAttribute('value', 0)
+        clickedImgCell.setAttribute('id', 'img0')
+        emptyCell.setAttribute('src', clickedImgSrc)
+        emptyCell.setAttribute('value', clickedImgCellVal)
+        emptyCell.setAttribute('id', `img${clickedImgCellVal}`)
+        // not sure how, but these moves need to be reflected in cellArr. otherwise, rerunning findEmpty() isn't going to allow game play to continue
+        findEmpty()
     }
-}
+
+
+    // checks each location of empty cell and allows adjacent cells to swap with empty:
+    if (emptyLoc === 0) {
+        emptyCell = document.getElementById('cellDiv0').firstChild
+        // console.log(emptyCell)
+        if (clickedCellVal === 1 || clickedCellVal === 3) {
+            // swap cellDiv1 (clicked) with cell 0 (empty):
+            swapImg()
+        }
+    } else if (emptyLoc === 1) {
+        emptyCell = document.getElementById('cellDiv1').firstChild
+        if (clickedCellVal === 0 || clickedCellVal === 2 || clickedCellVal === 4) {
+            swapImg()
+        }
+    } else if (emptyLoc === 2) {
+        emptyCell = document.getElementById('cellDiv2').firstChild
+        if (clickedCellVal === 1 || clickedCellVal === 5) {
+            swapImg()
+        }
+    } else if (emptyLoc === 3) {
+        emptyCell = document.getElementById('cellDiv3').firstChild
+        if (clickedCellVal === 0 || clickedCellVal === 4 || clickedCellVal === 6) {
+            swapImg()
+        }
+    } else if (emptyLoc === 4) {
+        emptyCell = document.getElementById('cellDiv4').firstChild
+        if (clickedCellVal === 1 || clickedCellVal === 3 || clickedCellVal === 5 || clickedCellVal === 7) {
+            swapImg()
+        }
+    } else if (emptyLoc === 5) {
+        emptyCell = document.getElementById('cellDiv5').firstChild
+        if (clickedCellVal === 2 || clickedCellVal === 4 || clickedCellVal === 8) {
+            swapImg()
+        }
+    } else if (emptyLoc === 6) {
+        emptyCell = document.getElementById('cellDiv6').firstChild
+        if (clickedCellVal === 7 || clickedCellVal === 3) {
+            swapImg()
+        }
+    } else if (emptyLoc === 7) {
+        emptyCell = document.getElementById('cellDiv7').firstChild
+        if (clickedCellVal === 4 || clickedCellVal === 6 || clickedCellVal === 8) {
+            swapImg()
+        }
+    } else (emptyLoc === 8)
+    emptyCell = document.getElementById('cellDiv8').firstChild
+    if (clickedCellVal === 5 || clickedCellVal === 7) {
+        swapImg()
+    }
+};
+
+
 
 
 // document.querySelectorAll('.cell-Img').forEach(e => {
