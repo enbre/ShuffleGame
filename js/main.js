@@ -25,10 +25,20 @@ let gameFrame = document.createElement('main');
 gameFrame.setAttribute('class', 'game-frame');
 document.querySelector('body').appendChild(gameFrame)
 
+let title = document.createElement('h1');
+title.setAttribute('class', 'title');
+title.innerHTML='SHUFFLER';
+document.querySelector('.game-frame').appendChild(title)
+
 let container = document.createElement('div');
 container.setAttribute('class', 'container');
-document.querySelector('.game-frame').appendChild(container)
+document.querySelector('h1').appendChild(container)
 
+// let movesTracker = document.createElement('div');
+// title.setAttribute('class', 'moves');
+// title.innerHTML='MOVES: 0';
+// document.querySelector('body').appendChild(movesTracker)
+// document.body.appendChild(movesTracker)
 
 //  2D array representing game board, but not actually used for the code: 
 let gridArr2 = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
@@ -123,10 +133,32 @@ function findEmpty() {
     }
 };
 
-// conditional that determines which cells are movable:
+
+//I need to pull these variables out of the function so I can access them for other functions. Not sure how to do this. 
+
+// // value of clicked cell div:
+// let clickedCellVal = (parseInt(e.target.parentElement.id.charAt(7)))
+// // console.log(`clicked cell index: ${clickedCellVal}`)
+// // image element:
+// let clickedImgCell = (e.target)
+// // value of image element
+// // let clickedImgCellVal =(e.target.id.charAt(3))
+// let clickedImgCellVal = (parseInt(e.target.id.charAt(3)))
+// // image element source:
+// let clickedImgSrc = (`./images/image${clickedImgCellVal}.png`)
+// // console.log(clickedImgSrc)
+
+
+
+
+
+
+
+
+// conditional function that determines which cells are movable:
 function isMovable(e) {
     // value of clicked cell div:
-    let clickedCellVal = (parseInt(e.target.parentElement.id.charAt(7)))
+    let clickedCellLoc = (parseInt(e.target.parentElement.id.charAt(7)))
     // console.log(`clicked cell index: ${clickedCellVal}`)
     // image element:
     let clickedImgCell = (e.target)
@@ -145,8 +177,14 @@ function isMovable(e) {
         emptyCell.setAttribute('src', clickedImgSrc)
         emptyCell.setAttribute('value', clickedImgCellVal)
         emptyCell.setAttribute('id', `img${clickedImgCellVal}`)
-        // not sure how, but these moves need to be reflected in cellArr. otherwise, rerunning findEmpty() isn't going to allow game play to continue
+        const tmp = cellArr[emptyLoc]
+        cellArr[emptyLoc]=cellArr[clickedCellLoc]
+        cellArr[clickedCellLoc]=tmp
+        // console.log(cellArr)
         findEmpty()
+        moves+=1
+        console.log(`Moves: ${moves}`)
+        // document.querySelector('.moves').innerHTML=`Moves: ${moves}` 
     }
 
 
@@ -154,91 +192,51 @@ function isMovable(e) {
     if (emptyLoc === 0) {
         emptyCell = document.getElementById('cellDiv0').firstChild
         // console.log(emptyCell)
-        if (clickedCellVal === 1 || clickedCellVal === 3) {
+        if (clickedCellLoc === 1 || clickedCellLoc === 3) {
             // swap cellDiv1 (clicked) with cell 0 (empty):
             swapImg()
         }
     } else if (emptyLoc === 1) {
         emptyCell = document.getElementById('cellDiv1').firstChild
-        if (clickedCellVal === 0 || clickedCellVal === 2 || clickedCellVal === 4) {
+        if (clickedCellLoc === 0 || clickedCellLoc === 2 || clickedCellLoc === 4) {
             swapImg()
         }
     } else if (emptyLoc === 2) {
         emptyCell = document.getElementById('cellDiv2').firstChild
-        if (clickedCellVal === 1 || clickedCellVal === 5) {
+        if (clickedCellLoc === 1 || clickedCellLoc === 5) {
             swapImg()
         }
     } else if (emptyLoc === 3) {
         emptyCell = document.getElementById('cellDiv3').firstChild
-        if (clickedCellVal === 0 || clickedCellVal === 4 || clickedCellVal === 6) {
+        if (clickedCellLoc === 0 || clickedCellLoc === 4 || clickedCellLoc === 6) {
             swapImg()
         }
     } else if (emptyLoc === 4) {
         emptyCell = document.getElementById('cellDiv4').firstChild
-        if (clickedCellVal === 1 || clickedCellVal === 3 || clickedCellVal === 5 || clickedCellVal === 7) {
+        if (clickedCellLoc === 1 || clickedCellLoc === 3 || clickedCellLoc === 5 || clickedCellLoc === 7) {
             swapImg()
         }
     } else if (emptyLoc === 5) {
         emptyCell = document.getElementById('cellDiv5').firstChild
-        if (clickedCellVal === 2 || clickedCellVal === 4 || clickedCellVal === 8) {
+        if (clickedCellLoc === 2 || clickedCellLoc === 4 || clickedCellLoc === 8) {
             swapImg()
         }
     } else if (emptyLoc === 6) {
         emptyCell = document.getElementById('cellDiv6').firstChild
-        if (clickedCellVal === 7 || clickedCellVal === 3) {
+        if (clickedCellLoc === 7 || clickedCellLoc === 3) {
             swapImg()
         }
     } else if (emptyLoc === 7) {
         emptyCell = document.getElementById('cellDiv7').firstChild
-        if (clickedCellVal === 4 || clickedCellVal === 6 || clickedCellVal === 8) {
+        if (clickedCellLoc === 4 || clickedCellLoc === 6 || clickedCellLoc === 8) {
             swapImg()
         }
     } else (emptyLoc === 8)
     emptyCell = document.getElementById('cellDiv8').firstChild
-    if (clickedCellVal === 5 || clickedCellVal === 7) {
+    if (clickedCellLoc === 5 || clickedCellLoc === 7) {
         swapImg()
     }
 };
-
-
-
-
-// document.querySelectorAll('.cell-Img').forEach(e => {
-//     e.addEventListener('click', isMovable)
-// })
-
-// function swapImg(e) {
-// function swapImg(e) {
-//     // console.log(e.target)
-//     console.log(parseInt(e.target.id.charAt(3)))
-//     console.log(e.target.id)
-//     // console.log(e.target.value)
-//     // add empty image to clicked cell
-//     // isMovable(e.target.id)
-//     // and add image from clicked cell to empty cell
-//     // remove event listener from all cells
-// }
-
-
-
-
-
-
-
-// switch statements:
-// console.log(parseInt(value.charAt(3)))
-// switch (value) {
-// case 0:
-//     console.log('top left')
-//     break;
-// case 1:
-//     console.log('center top')
-//     break;
-// default:
-//     console.log('we should not get here')
-
-
-
 
 
 fillGridArr();
@@ -248,19 +246,8 @@ shuffleCells()
 dealCells()
 findEmpty()
 
-
-console.log(`Empty location: ${emptyLoc}`)
+// console.log(`Empty location: ${emptyLoc}`)
 // console.table(gridArr2)
-
-
-
-
-// document.getElementById("img4").classList.toggle("cell-Empty");
-
-
-
-
-
 
 
 
@@ -270,17 +257,15 @@ console.log(`Empty location: ${emptyLoc}`)
 // ------------------------------------------------
 
 // steps left to code:
-// apply 'click' listener event to adjacent cells to allow them to be clicked
-// click on div class, access child (img w values) using 'firstElementChild'
-// use set attribute to swap images:
-// clicked square to empty, empty square to image from clicked cell
-
-// for each move, increase the total number of moves made on the 'moves' tracker
-// once a clickable cell is clicked, swap images, value, and class with empty cell
-// once all cell's values are in order through the grid, the puzzle is solved
+// adjust cellArr so findEmpty continues to work properly
+// add moves count to the DOM; for each move, increase the total number of moves made on the 'moves' tracker
+// create function to compare image value to cell index; run this after every move
+    // once all cell and image values match, the puzzle is solved
 // ------------------------------------------------
 
 
+
+// starting to flesh out scalable adjacent checking function(not hard-coded with set values):
 
 // using emptyLoc, find adjacent (and clickable) cells:
 // function findAdj(){
@@ -299,24 +284,4 @@ console.log(`Empty location: ${emptyLoc}`)
 
 
 
-// from high card:
-
-// // Create Score Container
-// let scoreContainer = document.createElement('div');
-// scoreContainer.setAttribute('class', 'scoreContainer')
-// document.body.appendChild(scoreContainer);
-// // Create Player Score
-// let playerScore = document.createElement('div');
-// playerScore.setAttribute('class', 'playerScore');
-// playerScore.innerHTML = "Player: 0";
-// scoreContainer.appendChild(playerScore);
-// // Create Computer score
-// let cpuScore = document.createElement('div');
-// cpuScore.setAttribute('class', 'cpuScore');
-// cpuScore.innerHTML = "CPU: 0";
-// scoreContainer.appendChild(cpuScore);
-// // Create Deal Button
-// let dealButton = document.createElement('button');
-// dealButton.setAttribute("class", "dealButton");
-// document.body.appendChild(dealButton);
 

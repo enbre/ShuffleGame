@@ -1,3 +1,5 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,6 +7,22 @@
 body{
     background-color:#b3defa;
 }
+
+.title{
+    color: lightgray;
+    font-family: 'Nunito', sans-serif;
+    font-size: 40 px;
+    margin-bottom: 30px;
+}
+
+.moves{
+    color: lightgray;
+    font-family: 'Nunito', sans-serif;
+    font-size: 24 px;
+    /* margin-bottom: 30px; */
+}
+
+
 .game-frame{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8);
     display: flex;
@@ -28,15 +46,6 @@ body{
     background-color: #7b81c7;
 }
 
-/* from CSS generator website: https://cssgrid-generator.netlify.app/ */
-/* .parent {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    } */
-
 .cell-Img {
     justify-self: center;
     align-self: center;
@@ -45,23 +54,7 @@ body{
     border: 0.5px solid grey;
     /* background-color: cadetblue; */
 }
-.cell-Adj {
-    justify-self: center;
-    align-self: center;
-    width: 200px;
-    height: 200px;
-    /* border: 1px solid grey; */
-    /* background-color: cadetblue; */
-}
-.cell-Empty {
-    justify-self: center;
-    align-self: center;
-    width: 200px;
-    height: 200px;
-    /* border: 1px solid grey; */
-    background-image: url('../images/empty0.png');
 
-}
 .cell {
     justify-self: center;
     align-self: center;
@@ -70,6 +63,7 @@ body{
     /* border: 1px solid grey; */
     /* background-color: cadetblue; */
 }
+
 /* taken from box-model-blog: */
 /* .button{ */
     /* removes underline from anchor tags */
