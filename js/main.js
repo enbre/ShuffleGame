@@ -69,9 +69,9 @@ function createCellDivs() {
         cell.setAttribute('class', 'cell');
         cell.setAttribute('id', `cellDiv${i}`)
         let cellImg = document.createElement('img')
-        cellImg.setAttribute('src', `./images/empty.png`);
+        cellImg.setAttribute('src', `./images/image0.png`);
         cellImg.setAttribute('class', 'cell-Img');
-        cellImg.setAttribute('classList', 'cell-Empty');
+        // cellImg.setAttribute('classList', 'cell-Empty');
         cellImg.setAttribute('id', `cell${i}`)
         container.appendChild(cell);
         cell.appendChild(cellImg);
@@ -85,7 +85,7 @@ function getCells() {
     for (let i = 1; i < 9; i++) {
         cellArr.push({ src: `./images/image${i}.png`, value: i, id: `img${i}` })
     }
-    cellArr.push({ src: `./images/empty.png`, value: 0, id: `img0` })
+    cellArr.push({ src: `./images/image0.png`, value: 0, id: `img0` })
     // console.log(cellArr)
 };
 
@@ -128,13 +128,42 @@ function findEmpty() {
 
 // function isMovable(value) {
 function isMovable(e) {
+    // value of clicked cell div:
+    let clickedCellVal =(parseInt(e.target.parentElement.id.charAt(7)))
+    // console.log(`clicked cell index: ${clickedCellVal}`)
+    // image element:
+    let clickedImgCell =(e.target)
+    // value of image element
+    // let clickedImgCellVal =(e.target.id.charAt(3))
+    let clickedImgCellVal =(parseInt(e.target.id.charAt(3)))
+    // image element source:
+    let clickedImgSrc =(`./images/image${clickedImgCellVal}.png`)
+
+    // console.log(clickedImgSrc)
+
+
     if (emptyLoc===0){
-        let clickedCell =(parseInt(e.target.parentElement.id.charAt(    7   )  ) )
-            if (clickedCell===1 || clickedCell===3){
-                console.log('this cell is movable!')
-        // how to access image value as number:
-        // let clickedVal=(parseInt(e.target.id.charAt(3)))
+        emptyCell=document.getElementById('cellDiv0').firstChild
+        // emptyCell=document.getElementById('cellDiv0').firstElementChild.src
+        // emptyCell=document.getElementById('img0').parentElement
+        // console.log(emptyCell)
+
+
+        // if (clickedCellVal===1|| clickedImgCellVal===3){
+        if (clickedCellVal===1||clickedCellVal===3){
+                // swap cellDiv1 (clicked) with cell 0 (empty):
+                clickedImgCell.setAttribute('src', './images/image0.png')
+                clickedImgCell.setAttribute('value', 0)
+                clickedImgCell.setAttribute('id', 'img0')
+                emptyCell.setAttribute('src', clickedImgSrc)
+                emptyCell.setAttribute('value', clickedImgCellVal)
+                emptyCell.setAttribute('id', `img${clickedImgCellVal}`)
+
+            // console.log('this cell is movable!')
         }
+        // else if (clickedCellVal===3){
+
+
     }
 }
 
@@ -186,7 +215,7 @@ findEmpty()
 
 
 console.log(`Empty location: ${emptyLoc}`)
-console.table(gridArr2)
+// console.table(gridArr2)
 
 
 
