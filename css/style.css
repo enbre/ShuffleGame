@@ -13,15 +13,21 @@ body{
     font-family: 'Nunito', sans-serif;
     font-size: 40 px;
     margin-bottom: 30px;
+    height: 20px;
+    position: relative;
+    left: 20px;
+
 }
 
 .moves{
     color: lightgray;
     font-family: 'Nunito', sans-serif;
-    font-size: 24 px;
+    font-size: 30 px;
     position: relative;
-    top: -50px;
-    left: 450px;
+    top: -40px;
+    left: 480px;
+    height: 20px;
+
     /* margin-bottom: 30px; */
 }
 
@@ -55,6 +61,7 @@ body{
     width: 200px;
     height: 200px;
     border: 0.5px solid grey;
+    /* top: -30px; */
     /* background-color: cadetblue; */
 }
 

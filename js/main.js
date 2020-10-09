@@ -30,43 +30,24 @@ document.querySelector('body').appendChild(gameFrame)
 
 
 
-// let header = document.createElement('div')
-// title.setAttribute('class', 'header');
-// document.querySelector('.game-frame').appendChild(header)
+let header = document.createElement('div')
+header.setAttribute('class', 'header');
+document.querySelector('.game-frame').appendChild(header)
 
 
-// let title = document.createElement('h1');
-// title.setAttribute('class', 'title');
-// title.innerHTML='SHUFFLER';
-// document.querySelector('.header').appendChild(title)
+let title = document.createElement('h1');
+title.setAttribute('class', 'title');
+title.innerHTML='SHUFFLER';
+document.querySelector('.header').appendChild(title)
 
-// // let movesTracker = document.createElement('div');
-// movesTracker.setAttribute('class', 'moves');
-// movesTracker.innerHTML='MOVES: 0';
-// document.querySelector('.header').appendChild(movesTracker)
+let movesTracker = document.createElement('h2');
+movesTracker.setAttribute('class', 'moves');
+movesTracker.innerHTML='MOVES: 0';
+document.querySelector('.header').appendChild(movesTracker)
 
-
-
-
-
-
-// old game elements:
-
-// let title = document.createElement('h1');
-// title.setAttribute('class', 'title');
-// title.innerHTML='SHUFFLER';
-// document.querySelector('.game-frame').appendChild(title)
-
-// let container = document.createElement('div');
-// container.setAttribute('class', 'container');
-// document.querySelector('h1').appendChild(container)
-
-
-// let movesTracker = document.createElement('div');
-// movesTracker.setAttribute('class', 'moves');
-// movesTracker.innerHTML='MOVES: 0';
-// document.querySelector('.game-frame').appendChild(movesTracker)
-
+let container = document.createElement('div');
+container.setAttribute('class', 'container');
+document.querySelector('.header').appendChild(container)
 
 
 //  2D array representing game board, but not actually used for the code: 
@@ -207,7 +188,7 @@ function isMovable(e) {
         findEmpty()
         moves+=1
         console.log(`Moves: ${moves}`)
-        // document.querySelector('.moves').innerHTML=`Moves: ${moves}` 
+        document.querySelector('.moves').innerHTML=`MOVES: ${moves}` 
     }
 
 
