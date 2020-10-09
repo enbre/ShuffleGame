@@ -21,24 +21,53 @@ console.log('insanity check')
 // empty cell is identified by class & id applied upon creation, but not sure how to figure that out when images are randomly arranged
 // ^^querySelector to find ID
 
+
 let gameFrame = document.createElement('main');
 gameFrame.setAttribute('class', 'game-frame');
 document.querySelector('body').appendChild(gameFrame)
 
-let title = document.createElement('h1');
-title.setAttribute('class', 'title');
-title.innerHTML='SHUFFLER';
-document.querySelector('.game-frame').appendChild(title)
+// new game elements:
 
-let container = document.createElement('div');
-container.setAttribute('class', 'container');
-document.querySelector('h1').appendChild(container)
+
+
+// let header = document.createElement('div')
+// title.setAttribute('class', 'header');
+// document.querySelector('.game-frame').appendChild(header)
+
+
+// let title = document.createElement('h1');
+// title.setAttribute('class', 'title');
+// title.innerHTML='SHUFFLER';
+// document.querySelector('.header').appendChild(title)
+
+// // let movesTracker = document.createElement('div');
+// movesTracker.setAttribute('class', 'moves');
+// movesTracker.innerHTML='MOVES: 0';
+// document.querySelector('.header').appendChild(movesTracker)
+
+
+
+
+
+
+// old game elements:
+
+// let title = document.createElement('h1');
+// title.setAttribute('class', 'title');
+// title.innerHTML='SHUFFLER';
+// document.querySelector('.game-frame').appendChild(title)
+
+// let container = document.createElement('div');
+// container.setAttribute('class', 'container');
+// document.querySelector('h1').appendChild(container)
+
 
 // let movesTracker = document.createElement('div');
-// title.setAttribute('class', 'moves');
-// title.innerHTML='MOVES: 0';
-// document.querySelector('body').appendChild(movesTracker)
-// document.body.appendChild(movesTracker)
+// movesTracker.setAttribute('class', 'moves');
+// movesTracker.innerHTML='MOVES: 0';
+// document.querySelector('.game-frame').appendChild(movesTracker)
+
+
 
 //  2D array representing game board, but not actually used for the code: 
 let gridArr2 = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
@@ -134,6 +163,7 @@ function findEmpty() {
 };
 
 
+
 //I need to pull these variables out of the function so I can access them for other functions. Not sure how to do this. 
 
 // // value of clicked cell div:
@@ -147,13 +177,6 @@ function findEmpty() {
 // // image element source:
 // let clickedImgSrc = (`./images/image${clickedImgCellVal}.png`)
 // // console.log(clickedImgSrc)
-
-
-
-
-
-
-
 
 // conditional function that determines which cells are movable:
 function isMovable(e) {
@@ -237,6 +260,12 @@ function isMovable(e) {
         swapImg()
     }
 };
+
+// let movesTracker = document.createElement('h1');
+// movesTracker.setAttribute('class', 'moves');
+// movesTracker.innerHTML='MOVES: 0';
+// document.querySelector('.game-frame').appendChild(movesTracker)
+
 
 
 fillGridArr();
