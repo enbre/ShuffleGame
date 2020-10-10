@@ -2,7 +2,8 @@ console.log('insanity check')
 // Project One- Shuffle Puzzle:
 // A scrambled picture broken up into "pixels", is loaded on the main screen with one 'pixel' missing. User rearranges 'pixels', or image cells, one at a time by sliding cells into the open cell. Number of moves is tracked and logged on screen. One player game.
 
-
+// console.log('_____________________________________________')
+// initial thoughts:
 // Image cells:
 // Create three classes: 
 //  cellImage- general image cells
@@ -12,7 +13,6 @@ console.log('insanity check')
 // after meeting w/ Michael:
 // click on image, rather than drag. use a 2d array (essentially an array of ) 
 
-// initial thoughts:
 // Probably going to use some sort combination of ondrag and ondrop to move images from adjacent cells to the empty cell, and then event listener to change the class of the two affected cells.
 // Not sure how to limit the dragability to only those cells that are adjacent to the empty cell. A distance limiter? Since every cell is a square of the same size, if the cellAdj could be limited to a distance slightly larger than the h or w of the empty cell, that would work. Don't know if that is an option.
 
@@ -20,20 +20,16 @@ console.log('insanity check')
 // how to identify which cells are adjacent to empty cell?
 // empty cell is identified by class & id applied upon creation, but not sure how to figure that out when images are randomly arranged
 // ^^querySelector to find ID
+// console.log('_____________________________________________')
 
 
 let gameFrame = document.createElement('main');
 gameFrame.setAttribute('class', 'game-frame');
 document.querySelector('body').appendChild(gameFrame)
 
-// new game elements:
-
-
-
 let header = document.createElement('div')
 header.setAttribute('class', 'header');
 document.querySelector('.game-frame').appendChild(header)
-
 
 let title = document.createElement('h1');
 title.setAttribute('class', 'title');
@@ -137,8 +133,10 @@ function dealCells() {
 function findEmpty() {
     for (let i = 0; i < gridArrLen; i++) {
         let tempCell = cellArr[i]
-        if (tempCell.value === 0) {
+        // if (tempCell.value === 0) {
+        if (tempCell.id == 'img0') {
             emptyLoc = i
+            console.log(tempCell)
         }
     }
 };
@@ -187,7 +185,7 @@ function isMovable(e) {
         // console.log(cellArr)
         findEmpty()
         moves+=1
-        console.log(`Moves: ${moves}`)
+        // console.log(`Moves: ${moves}`)
         document.querySelector('.moves').innerHTML=`MOVES: ${moves}` 
     }
 
@@ -195,50 +193,62 @@ function isMovable(e) {
     // checks each location of empty cell and allows adjacent cells to swap with empty:
     if (emptyLoc === 0) {
         emptyCell = document.getElementById('cellDiv0').firstChild
-        // console.log(emptyCell)
         if (clickedCellLoc === 1 || clickedCellLoc === 3) {
             // swap cellDiv1 (clicked) with cell 0 (empty):
             swapImg()
+            console.log(`empty was at 0, clicked cell was ${clickedCellLoc}`)
         }
     } else if (emptyLoc === 1) {
         emptyCell = document.getElementById('cellDiv1').firstChild
         if (clickedCellLoc === 0 || clickedCellLoc === 2 || clickedCellLoc === 4) {
             swapImg()
+            console.log(`empty was at 1, clicked cell was ${clickedCellLoc}`)
         }
     } else if (emptyLoc === 2) {
         emptyCell = document.getElementById('cellDiv2').firstChild
         if (clickedCellLoc === 1 || clickedCellLoc === 5) {
             swapImg()
+            console.log(`empty was at 2, clicked cell was ${clickedCellLoc}`)
         }
     } else if (emptyLoc === 3) {
         emptyCell = document.getElementById('cellDiv3').firstChild
         if (clickedCellLoc === 0 || clickedCellLoc === 4 || clickedCellLoc === 6) {
             swapImg()
+            console.log(`empty was at 3, clicked cell was ${clickedCellLoc}`)
         }
     } else if (emptyLoc === 4) {
         emptyCell = document.getElementById('cellDiv4').firstChild
         if (clickedCellLoc === 1 || clickedCellLoc === 3 || clickedCellLoc === 5 || clickedCellLoc === 7) {
             swapImg()
+            console.log(`empty was at 4, clicked cell was ${clickedCellLoc}`)
         }
+        // ==============================================================
     } else if (emptyLoc === 5) {
         emptyCell = document.getElementById('cellDiv5').firstChild
         if (clickedCellLoc === 2 || clickedCellLoc === 4 || clickedCellLoc === 8) {
             swapImg()
+            console.log(`empty was at 5, clicked cell was ${clickedCellLoc}`)
         }
+        // ====================^^^^^^^^^^ and this condition ^^^^========================================================
     } else if (emptyLoc === 6) {
         emptyCell = document.getElementById('cellDiv6').firstChild
         if (clickedCellLoc === 7 || clickedCellLoc === 3) {
             swapImg()
+            console.log(`empty was at 6, clicked cell was ${clickedCellLoc}`)
         }
+        // ==============================================================
     } else if (emptyLoc === 7) {
         emptyCell = document.getElementById('cellDiv7').firstChild
         if (clickedCellLoc === 4 || clickedCellLoc === 6 || clickedCellLoc === 8) {
             swapImg()
+            console.log(`empty was at 7, clicked cell was ${clickedCellLoc}`)
         }
+        // ====================^^^^^^^^^^ and this condition ^^^^=======================================================
     } else (emptyLoc === 8)
     emptyCell = document.getElementById('cellDiv8').firstChild
     if (clickedCellLoc === 5 || clickedCellLoc === 7) {
         swapImg()
+        console.log(`empty was at 8, clicked cell was ${clickedCellLoc}`)
     }
 };
 
@@ -257,7 +267,7 @@ dealCells()
 findEmpty()
 
 // console.log(`Empty location: ${emptyLoc}`)
-// console.table(gridArr2)
+console.table(gridArr2)
 
 
 
@@ -268,7 +278,6 @@ findEmpty()
 
 // steps left to code:
 // adjust cellArr so findEmpty continues to work properly
-// add moves count to the DOM; for each move, increase the total number of moves made on the 'moves' tracker
 // create function to compare image value to cell index; run this after every move
     // once all cell and image values match, the puzzle is solved
 // ------------------------------------------------
