@@ -23,9 +23,16 @@ console.log('insanity check')
 // console.log('_____________________________________________')
 
 
+
+
+
+
+
 let gameFrame = document.createElement('main');
 gameFrame.setAttribute('class', 'game-frame');
 document.querySelector('body').appendChild(gameFrame)
+
+// set header as flexbox, and title, reset, and moves as Spans
 
 let header = document.createElement('div')
 header.setAttribute('class', 'header');
@@ -33,12 +40,18 @@ document.querySelector('.game-frame').appendChild(header)
 
 let title = document.createElement('h1');
 title.setAttribute('class', 'title');
-title.innerHTML='SHUFFLER';
+title.innerHTML = 'SHUFFLER';
 document.querySelector('.header').appendChild(title)
+
+// let reset = document.createElement('div');
+// reset.setAttribute('class', 'button');
+// reset.innerHTML='RESET';
+// document.querySelector('.header').appendChild(reset)
+// // document.body.appendChild(directions)
 
 let movesTracker = document.createElement('h2');
 movesTracker.setAttribute('class', 'moves');
-movesTracker.innerHTML='MOVES: 0';
+movesTracker.innerHTML = 'MOVES: 0';
 document.querySelector('.header').appendChild(movesTracker)
 
 let container = document.createElement('div');
@@ -115,16 +128,16 @@ function shuffleCells() {
     }
 };
 
-// distributes shuffled cells to grid of cell containers at the start of the game:
+// distributes shuffled image objects to grid of cell div containers at the start of the game and adds click event listener:
 function dealCells() {
-    // linear array to apply image objects to div cell containers:
     for (let i = 0; i < cellArr.length; i++) {
         let newCell = cellArr[i];
         let tempCell = document.getElementById(`cell${i}`)
         tempCell.setAttribute('src', newCell.src)
         tempCell.setAttribute('value', newCell.value)
         tempCell.setAttribute('id', newCell.id)
-        tempCell.addEventListener('click', isMovable)
+        // tempCell.addEventListener('click', isMovable)
+        // tempCell.addEventListener('click', swapImg)
 
     }
 };
@@ -136,121 +149,218 @@ function findEmpty() {
         // if (tempCell.value === 0) {
         if (tempCell.id == 'img0') {
             emptyLoc = i
-            console.log(tempCell)
+            // console.log(tempCell)
         }
     }
 };
 
 
 
-//I need to pull these variables out of the function so I can access them for other functions. Not sure how to do this. 
-
-// // value of clicked cell div:
-// let clickedCellVal = (parseInt(e.target.parentElement.id.charAt(7)))
-// // console.log(`clicked cell index: ${clickedCellVal}`)
-// // image element:
-// let clickedImgCell = (e.target)
-// // value of image element
-// // let clickedImgCellVal =(e.target.id.charAt(3))
-// let clickedImgCellVal = (parseInt(e.target.id.charAt(3)))
-// // image element source:
-// let clickedImgSrc = (`./images/image${clickedImgCellVal}.png`)
-// // console.log(clickedImgSrc)
-
-// conditional function that determines which cells are movable:
-function isMovable(e) {
-    // value of clicked cell div:
-    let clickedCellLoc = (parseInt(e.target.parentElement.id.charAt(7)))
-    // console.log(`clicked cell index: ${clickedCellVal}`)
-    // image element:
-    let clickedImgCell = (e.target)
-    // value of image element
-    // let clickedImgCellVal =(e.target.id.charAt(3))
-    let clickedImgCellVal = (parseInt(e.target.id.charAt(3)))
-    // image element source:
-    let clickedImgSrc = (`./images/image${clickedImgCellVal}.png`)
-    // console.log(clickedImgSrc)
-
-    // swaps image, value, and id from clicked cell to empty cell:
-    function swapImg() {
-        clickedImgCell.setAttribute('src', './images/image0.png')
-        clickedImgCell.setAttribute('value', 0)
-        clickedImgCell.setAttribute('id', 'img0')
-        emptyCell.setAttribute('src', clickedImgSrc)
-        emptyCell.setAttribute('value', clickedImgCellVal)
-        emptyCell.setAttribute('id', `img${clickedImgCellVal}`)
-        const tmp = cellArr[emptyLoc]
-        cellArr[emptyLoc]=cellArr[clickedCellLoc]
-        cellArr[clickedCellLoc]=tmp
-        // console.log(cellArr)
-        findEmpty()
-        moves+=1
-        // console.log(`Moves: ${moves}`)
-        document.querySelector('.moves').innerHTML=`MOVES: ${moves}` 
-    }
-
-
-    // checks each location of empty cell and allows adjacent cells to swap with empty:
+// conditional function that determines which cells are movable and adds click event listeners to them. Also defines the array of indices of movable (adjacent) cells:
+function isMovable() {
     if (emptyLoc === 0) {
-        emptyCell = document.getElementById('cellDiv0').firstChild
-        if (clickedCellLoc === 1 || clickedCellLoc === 3) {
-            // swap cellDiv1 (clicked) with cell 0 (empty):
-            swapImg()
-            console.log(`empty was at 0, clicked cell was ${clickedCellLoc}`)
-        }
+        // defines image element of cells adjacent to empty cell:
+        adjRight = document.getElementById('cellDiv1').firstChild
+        adjDown = document.getElementById('cellDiv3').firstChild
+        // console.log('adj right:',adjRight)
+        // console.log('adj down:',adjDown)
+        // adds listeners to adjacent cells
+        adjRight.addEventListener('click', swapImg)
+        adjDown.addEventListener('click', swapImg)
+        // index of clickable cells to remove event listener
+        clickableIndex = [1, 3]
+
     } else if (emptyLoc === 1) {
-        emptyCell = document.getElementById('cellDiv1').firstChild
-        if (clickedCellLoc === 0 || clickedCellLoc === 2 || clickedCellLoc === 4) {
-            swapImg()
-            console.log(`empty was at 1, clicked cell was ${clickedCellLoc}`)
-        }
+        // defines image element of cells adjacent to empty cell:
+        adjLeft = document.getElementById('cellDiv0').firstChild
+        adjRight = document.getElementById('cellDiv2').firstChild
+        adjDown = document.getElementById('cellDiv4').firstChild
+        //    console.log('adj right:',adjRight)
+        //    console.log('adj down:',adjDown)
+        // adds listeners to adjacent cells
+        adjLeft.addEventListener('click', swapImg)
+        adjRight.addEventListener('click', swapImg)
+        adjDown.addEventListener('click', swapImg)
+        // index of clickable cells to remove event listener
+        clickableIndex = [0, 2, 4]
+
     } else if (emptyLoc === 2) {
-        emptyCell = document.getElementById('cellDiv2').firstChild
-        if (clickedCellLoc === 1 || clickedCellLoc === 5) {
-            swapImg()
-            console.log(`empty was at 2, clicked cell was ${clickedCellLoc}`)
-        }
+        // defines image element of cells adjacent to empty cell:
+        adjLeft = document.getElementById('cellDiv1').firstChild
+        adjDown = document.getElementById('cellDiv5').firstChild
+        // console.log('adj right:',adjRight)
+        // console.log('adj down:',adjDown)
+        // adds listeners to adjacent cells
+        adjLeft.addEventListener('click', swapImg)
+        adjDown.addEventListener('click', swapImg)
+        // index of clickable cells to remove event listener
+        clickableIndex = [1, 5]
     } else if (emptyLoc === 3) {
-        emptyCell = document.getElementById('cellDiv3').firstChild
-        if (clickedCellLoc === 0 || clickedCellLoc === 4 || clickedCellLoc === 6) {
-            swapImg()
-            console.log(`empty was at 3, clicked cell was ${clickedCellLoc}`)
-        }
+        // defines image element of cells adjacent to empty cell:
+        adjUp = document.getElementById('cellDiv0').firstChild
+        adjRight = document.getElementById('cellDiv4').firstChild
+        adjDown = document.getElementById('cellDiv6').firstChild
+        // console.log('adj right:',adjRight)
+        // console.log('adj down:',adjDown)
+        // adds listeners to adjacent cells
+        adjUp.addEventListener('click', swapImg)
+        adjRight.addEventListener('click', swapImg)
+        adjDown.addEventListener('click', swapImg)
+        // index of clickable cells to remove event listener
+        clickableIndex = [0, 4, 6]
     } else if (emptyLoc === 4) {
-        emptyCell = document.getElementById('cellDiv4').firstChild
-        if (clickedCellLoc === 1 || clickedCellLoc === 3 || clickedCellLoc === 5 || clickedCellLoc === 7) {
-            swapImg()
-            console.log(`empty was at 4, clicked cell was ${clickedCellLoc}`)
-        }
-        // ==============================================================
+        // defines image element of cells adjacent to empty cell:
+        adjUp = document.getElementById('cellDiv1').firstChild
+        adjLeft = document.getElementById('cellDiv3').firstChild
+        adjRight = document.getElementById('cellDiv5').firstChild
+        adjDown = document.getElementById('cellDiv7').firstChild
+        // console.log('adj right:',adjRight)
+        // console.log('adj down:',adjDown)
+        // adds listeners to adjacent cells
+        adjUp.addEventListener('click', swapImg)
+        adjLeft.addEventListener('click', swapImg)
+        adjRight.addEventListener('click', swapImg)
+        adjDown.addEventListener('click', swapImg)
+        // index of clickable cells to remove event listener
+        clickableIndex = [1, 3, 5, 7]
     } else if (emptyLoc === 5) {
-        emptyCell = document.getElementById('cellDiv5').firstChild
-        if (clickedCellLoc === 2 || clickedCellLoc === 4 || clickedCellLoc === 8) {
-            swapImg()
-            console.log(`empty was at 5, clicked cell was ${clickedCellLoc}`)
-        }
-        // ====================^^^^^^^^^^ and this condition ^^^^========================================================
+        // defines image element of cells adjacent to empty cell:
+        adjUp = document.getElementById('cellDiv2').firstChild
+        adjLeft = document.getElementById('cellDiv4').firstChild
+        adjDown = document.getElementById('cellDiv8').firstChild
+        // console.log('adj right:',adjRight)
+        // console.log('adj down:',adjDown)
+        // adds listeners to adjacent cells
+        adjUp.addEventListener('click', swapImg)
+        adjLeft.addEventListener('click', swapImg)
+        adjDown.addEventListener('click', swapImg)
+        // index of clickable cells to remove event listener
+        clickableIndex = [2, 4, 8]
     } else if (emptyLoc === 6) {
-        emptyCell = document.getElementById('cellDiv6').firstChild
-        if (clickedCellLoc === 7 || clickedCellLoc === 3) {
-            swapImg()
-            console.log(`empty was at 6, clicked cell was ${clickedCellLoc}`)
-        }
-        // ==============================================================
+        // defines image element of cells adjacent to empty cell:
+        adjUp = document.getElementById('cellDiv3').firstChild
+        adjRight = document.getElementById('cellDiv7').firstChild
+        // console.log('adj right:',adjRight)
+        // console.log('adj down:',adjDown)
+        // adds listeners to adjacent cells
+        adjUp.addEventListener('click', swapImg)
+        adjRight.addEventListener('click', swapImg)
+        // index of clickable cells to remove event listener
+        clickableIndex = [3, 7]
     } else if (emptyLoc === 7) {
-        emptyCell = document.getElementById('cellDiv7').firstChild
-        if (clickedCellLoc === 4 || clickedCellLoc === 6 || clickedCellLoc === 8) {
-            swapImg()
-            console.log(`empty was at 7, clicked cell was ${clickedCellLoc}`)
-        }
-        // ====================^^^^^^^^^^ and this condition ^^^^=======================================================
-    } else (emptyLoc === 8)
-    emptyCell = document.getElementById('cellDiv8').firstChild
-    if (clickedCellLoc === 5 || clickedCellLoc === 7) {
-        swapImg()
-        console.log(`empty was at 8, clicked cell was ${clickedCellLoc}`)
+        // defines image element of cells adjacent to empty cell:
+        adjLeft = document.getElementById('cellDiv6').firstChild
+        adjUp = document.getElementById('cellDiv4').firstChild
+        adjRight = document.getElementById('cellDiv8').firstChild
+        // console.log('adj right:',adjRight)
+        // console.log('adj down:',adjDown)
+        // adds listeners to adjacent cells
+        adjLeft.addEventListener('click', swapImg)
+        adjUp.addEventListener('click', swapImg)
+        adjRight.addEventListener('click', swapImg)
+        // index of clickable cells to remove event listener
+        clickableIndex = [4, 6, 8]
+    } else {
+        // (emptyLoc === 8) 
+        // defines image element of cells adjacent to empty cell:
+        adjUp = document.getElementById('cellDiv5').firstChild
+        adjLeft = document.getElementById('cellDiv7').firstChild
+        // console.log('adj right:',adjRight)
+        // console.log('adj down:',adjDown)
+        // adds listeners to adjacent cells
+        adjUp.addEventListener('click', swapImg)
+        adjLeft.addEventListener('click', swapImg)
+        // index of clickable cells to remove event listener
+        clickableIndex = [5, 7]
     }
 };
+
+
+
+// array of indices of cells adjacent to empty, defined in isMovable()
+let clickableIndex
+// empty image element; defined in swapImg()
+let emptyCell
+// index of clicked cell div, defined in swapImg()
+let clickedCellLoc
+// image element of clicked cell, defined in swapImg()
+let clickedImgCell
+// value of image of clicked cell, defined in swapImg()
+let clickedImgCellVal
+// image source of clicked cell, defined in swapImg()
+let clickedImgSrc
+// console.log(clickedImgSrc)
+
+
+// swaps image, value, and id from clicked cell to empty cell, updates image object array, and updates moves counter:
+function swapImg(e) {
+    // defineImgVars()
+    // defines image element of empty cell:
+    emptyCell = document.getElementById(`cellDiv${emptyLoc}`).firstChild
+    // console.log('emptyCell:', emptyCell)
+    // defines image element of clicked cell:
+    clickedImgCell = (e.target)
+    // console.log('image element of clicked cell:', clickedImgCell)
+    // defines index of clicked cell div
+    clickedCellLoc = (parseInt(e.target.parentElement.id.charAt(7)))
+    // console.log('index of clicked cell:', clickedCellLoc)
+    // defines value of clicked image
+    clickedImgCellVal = (parseInt(e.target.id.charAt(3)))
+    // console.log('value of clicked image:', clickedImgCellVal)
+    // defines image element source:
+    clickedImgSrc = (`./images/image${clickedImgCellVal}.png`)
+    // removes event listener from everything in cickable index array
+    for (let i = 0; i < clickableIndex.length; i++) {
+        let cellRem = `cellDiv${clickableIndex[i]}`
+        cellRem = document.getElementById(cellRem).firstChild
+        // console.log(cellRem)
+        cellRem.removeEventListener('click', swapImg)
+    }
+    // sets attributes to empty cell:
+    emptyCell.setAttribute('src', clickedImgSrc)
+    emptyCell.setAttribute('value', clickedImgCellVal)
+    emptyCell.setAttribute('id', `img${clickedImgCellVal}`)
+    // sets attributes to clicked cell:
+    clickedImgCell.setAttribute('src', './images/image0.png')
+    clickedImgCell.setAttribute('value', 0)
+    clickedImgCell.setAttribute('id', 'img0')
+    // updates image cell array now that image cells have moved:
+    const tmp = cellArr[emptyLoc]
+    cellArr[emptyLoc] = cellArr[clickedCellLoc]
+    cellArr[clickedCellLoc] = tmp
+    // console.log(cellArr)
+    // locates the empty cell on the grid again
+    findEmpty()
+    // increases moves count and updates moves counter
+    moves += 1
+    document.querySelector('.moves').innerHTML = `MOVES: ${moves}`
+    isMovable()
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let directions = document.createElement('h3');
+directions.setAttribute('class', 'directions');
+directions.innerHTML = 'MOVE THE NUMBERS INTO THE CORRECT ORDER IN AS FEW MOVES AS POSSIBLE';
+document.body.appendChild(directions)
+
+
+
+
+
 
 // let movesTracker = document.createElement('h1');
 // movesTracker.setAttribute('class', 'moves');
@@ -265,22 +375,21 @@ getCells()
 shuffleCells()
 dealCells()
 findEmpty()
-
-// console.log(`Empty location: ${emptyLoc}`)
+isMovable()
 console.table(gridArr2)
+// console.log(`emptyLoc at start is ${emptyLoc}`)
+// console.log(`emptyCell at start is ${emptyCell}`)
 
 
 
 
 
 
-// ------------------------------------------------
 
 // steps left to code:
-// adjust cellArr so findEmpty continues to work properly
 // create function to compare image value to cell index; run this after every move
-    // once all cell and image values match, the puzzle is solved
-// ------------------------------------------------
+    // once all cell and image values match, the puzzle is solved: add DOM to change directions to congradulate user and list number of moves
+
 
 
 
@@ -300,7 +409,3 @@ console.table(gridArr2)
 
 // // right column, don't include left location
 // if (rightCol.includes(emptyLoc)===0)
-
-
-
-

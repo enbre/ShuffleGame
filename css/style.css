@@ -27,8 +27,16 @@ body{
     top: -40px;
     left: 480px;
     height: 20px;
-
-    /* margin-bottom: 30px; */
+}
+.directions{
+   
+    color:  #2f3974;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16 px;
+    position: relative;
+    bottom: -50px;
+    height: 20px;
+    text-align: center;
 }
 
 
@@ -75,7 +83,7 @@ body{
 }
 
 /* taken from box-model-blog: */
-/* .button{ */
+/* .button{
     /* removes underline from anchor tags */
     /* text-decoration: none;
     background-color: cornflowerblue;
@@ -84,8 +92,8 @@ body{
     border-radius: 3px;
     transition: filter 0.3s ease;
     filter: brightness(100%)
-}  
+}   */
+/* 
 .button:hover{
     filter:brightness(130%)
-}
- */
+} */ 
