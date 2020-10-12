@@ -36,11 +36,11 @@ let gridArr2 = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
 let gridArr = [];
 // total number of cells in grid array
 let gridArrLen = 0;
-// length of one side of the grid
+// length of one side of the grid; this will be used for the non-hard-coded adjacent checker function
 let gridSide = Math.sqrt(gridArrLen);
-// array of inices along left column:
+// array of inices along left column; this will be used for the non-hard-coded adjacent checker function:
 let leftCol = [0, 3, 6];
-// array of inices along right column:
+// array of inices along right column; this will be used for the non-hard-coded adjacent checker function:
 let rightCol = [2, 5, 8];
 // array used to store image objects with source, value, and id keys:
 let cellArr = [];
@@ -69,8 +69,6 @@ function createCellDivs() {
         let cellImg = document.createElement('img')
         cellImg.setAttribute('src', `./images/image0.png`);
         cellImg.setAttribute('class', 'cell-Img');
-        // cellImg.setAttribute('classList', 'cell-Empty');
-        // cellImg.setAttribute('id', `img${i}`)
         cellImg.setAttribute('id', `cell${i}`)
         container.appendChild(cell);
         cell.appendChild(cellImg);
@@ -102,14 +100,10 @@ function shuffleCells() {
 function dealCells() {
     for (let i = 0; i < cellArr.length; i++) {
         let newCell = cellArr[i];
-        // let tempCell = document.getElementById(`img${i}`)
         let tempCell = document.getElementById(`cell${i}`)
         tempCell.setAttribute('src', newCell.src)
         tempCell.setAttribute('value', newCell.value)
         tempCell.setAttribute('id', newCell.id)
-        // tempCell.addEventListener('click', isMovable)
-        // tempCell.addEventListener('click', swapImg)
-
     }
 };
 
@@ -303,13 +297,11 @@ function swapImg(e) {
     isMovable()
 };
 
-// document.querySelector('.button').addEventListener('click', ()=>{
-//     // getCells()
-//     shuffleCells()
-//     dealCells()
-//     document.querySelector('.moves').innerHTML = `MOVES: 0`
-// })
+document.querySelector('.button').addEventListener('click', ()=>{
+    location.reload()
+})
 
+// function to check that each image is in the correct location (matching image id to cell id)
 // function checkForComplete() {
 //     // for (let i =0; i<cellArr.length; i++){
 //     for (let i =0; i<2; i++){
