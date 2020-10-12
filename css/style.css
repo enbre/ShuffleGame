@@ -7,26 +7,54 @@
 body{
     background-color:#b3defa;
 }
-
+.header{
+    /* display: flex; */
+    justify-content: space-between;
+    position: relative;
+    top: -30px;
+}
 .title{
     color: lightgray;
     font-family: 'Nunito', sans-serif;
-    font-size: 40 px;
+    font-size: 80 px;
     margin-bottom: 30px;
     height: 20px;
     position: relative;
     left: 20px;
+    top: 40px;
 
 }
+.button{
+    position: relative;
+    /* text-decoration: none; */
+    font-family: 'Nunito', sans-serif;
+    right: -260px;
+    top: -10px;
+    /* left:560; */
+    width: 100px;
+    height: 30px;
+    color:  #2f3974;
+    background-color: #7b81c7;
+    text-align: center;
+    padding: 5px 5px 35px 5px;
+    border-radius: 12px;
+    transition: filter 0.3s ease;
+    filter: brightness(100%)
+}
+
+.button:hover{
+    filter:brightness(130%)
+} 
 
 .moves{
     color: lightgray;
     font-family: 'Nunito', sans-serif;
     font-size: 30 px;
     position: relative;
-    top: -40px;
+    top: -45px;
     left: 480px;
     height: 20px;
+    width: max-content;
 }
 .directions{
    
@@ -55,7 +83,7 @@ body{
 .container {
     display: grid;
     grid-template-columns: auto auto auto;
-    grid-gap: 2px;
+    grid-gap: 1px;
     width: 620px;
     height: 620px;
     border: 1px solid black;
@@ -83,17 +111,3 @@ body{
 }
 
 /* taken from box-model-blog: */
-/* .button{
-    /* removes underline from anchor tags */
-    /* text-decoration: none;
-    background-color: cornflowerblue;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 3px;
-    transition: filter 0.3s ease;
-    filter: brightness(100%)
-}   */
-/* 
-.button:hover{
-    filter:brightness(130%)
-} */ 

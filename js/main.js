@@ -2,37 +2,9 @@ console.log('insanity check')
 // Project One- Shuffle Puzzle:
 // A scrambled picture broken up into "pixels", is loaded on the main screen with one 'pixel' missing. User rearranges 'pixels', or image cells, one at a time by sliding cells into the open cell. Number of moves is tracked and logged on screen. One player game.
 
-// console.log('_____________________________________________')
-// initial thoughts:
-// Image cells:
-// Create three classes: 
-//  cellImage- general image cells
-//  cellAdj- image cells adjacent to empty cell, thus allowed to move  
-//  cellEmpty- single empty cell that is the only possible location where images can be dropped
-
-// after meeting w/ Michael:
-// click on image, rather than drag. use a 2d array (essentially an array of ) 
-
-// Probably going to use some sort combination of ondrag and ondrop to move images from adjacent cells to the empty cell, and then event listener to change the class of the two affected cells.
-// Not sure how to limit the dragability to only those cells that are adjacent to the empty cell. A distance limiter? Since every cell is a square of the same size, if the cellAdj could be limited to a distance slightly larger than the h or w of the empty cell, that would work. Don't know if that is an option.
-
-
-// how to identify which cells are adjacent to empty cell?
-// empty cell is identified by class & id applied upon creation, but not sure how to figure that out when images are randomly arranged
-// ^^querySelector to find ID
-// console.log('_____________________________________________')
-
-
-
-
-
-
-
 let gameFrame = document.createElement('main');
 gameFrame.setAttribute('class', 'game-frame');
 document.querySelector('body').appendChild(gameFrame)
-
-// set header as flexbox, and title, reset, and moves as Spans
 
 let header = document.createElement('div')
 header.setAttribute('class', 'header');
@@ -43,11 +15,10 @@ title.setAttribute('class', 'title');
 title.innerHTML = 'SHUFFLER';
 document.querySelector('.header').appendChild(title)
 
-// let reset = document.createElement('div');
-// reset.setAttribute('class', 'button');
-// reset.innerHTML='RESET';
-// document.querySelector('.header').appendChild(reset)
-// // document.body.appendChild(directions)
+let reset = document.createElement('h2');
+reset.setAttribute('class', 'button');
+reset.innerHTML='RESET';
+document.querySelector('.header').appendChild(reset)
 
 let movesTracker = document.createElement('h2');
 movesTracker.setAttribute('class', 'moves');
@@ -57,7 +28,6 @@ document.querySelector('.header').appendChild(movesTracker)
 let container = document.createElement('div');
 container.setAttribute('class', 'container');
 document.querySelector('.header').appendChild(container)
-
 
 //  2D array representing game board, but not actually used for the code: 
 let gridArr2 = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
@@ -72,7 +42,6 @@ let gridSide = Math.sqrt(gridArrLen);
 let leftCol = [0, 3, 6];
 // array of inices along right column:
 let rightCol = [2, 5, 8];
-
 // array used to store image objects with source, value, and id keys:
 let cellArr = [];
 // grid index of empty cell:
@@ -101,6 +70,7 @@ function createCellDivs() {
         cellImg.setAttribute('src', `./images/image0.png`);
         cellImg.setAttribute('class', 'cell-Img');
         // cellImg.setAttribute('classList', 'cell-Empty');
+        // cellImg.setAttribute('id', `img${i}`)
         cellImg.setAttribute('id', `cell${i}`)
         container.appendChild(cell);
         cell.appendChild(cellImg);
@@ -132,6 +102,7 @@ function shuffleCells() {
 function dealCells() {
     for (let i = 0; i < cellArr.length; i++) {
         let newCell = cellArr[i];
+        // let tempCell = document.getElementById(`img${i}`)
         let tempCell = document.getElementById(`cell${i}`)
         tempCell.setAttribute('src', newCell.src)
         tempCell.setAttribute('value', newCell.value)
@@ -153,8 +124,6 @@ function findEmpty() {
         }
     }
 };
-
-
 
 // conditional function that determines which cells are movable and adds click event listeners to them. Also defines the array of indices of movable (adjacent) cells:
 function isMovable() {
@@ -275,8 +244,6 @@ function isMovable() {
     }
 };
 
-
-
 // array of indices of cells adjacent to empty, defined in isMovable()
 let clickableIndex
 // empty image element; defined in swapImg()
@@ -290,7 +257,6 @@ let clickedImgCellVal
 // image source of clicked cell, defined in swapImg()
 let clickedImgSrc
 // console.log(clickedImgSrc)
-
 
 // swaps image, value, and id from clicked cell to empty cell, updates image object array, and updates moves counter:
 function swapImg(e) {
@@ -337,37 +303,32 @@ function swapImg(e) {
     isMovable()
 };
 
+// document.querySelector('.button').addEventListener('click', ()=>{
+//     // getCells()
+//     shuffleCells()
+//     dealCells()
+//     document.querySelector('.moves').innerHTML = `MOVES: 0`
+// })
 
+// function checkForComplete() {
+//     // for (let i =0; i<cellArr.length; i++){
+//     for (let i =0; i<2; i++){
+//         let cellVal=document.getElementById(`img${i}`).id
+//         if (cellArr[i]=i){
+//             console.log('game is complete!')
+//         }
+//     }
+// }
 
-
-
-
-
-
-
-
-
-
-
-
-
+// let cellVal=document.getElementById('img5')
+// console.log('cellVal:',cellVal)
+// let cellIndex=document.getElementById('cellDiv5')
+// console.log('cellIndex:', cellIndex)
 
 let directions = document.createElement('h3');
 directions.setAttribute('class', 'directions');
 directions.innerHTML = 'MOVE THE NUMBERS INTO THE CORRECT ORDER IN AS FEW MOVES AS POSSIBLE';
 document.body.appendChild(directions)
-
-
-
-
-
-
-// let movesTracker = document.createElement('h1');
-// movesTracker.setAttribute('class', 'moves');
-// movesTracker.innerHTML='MOVES: 0';
-// document.querySelector('.game-frame').appendChild(movesTracker)
-
-
 
 fillGridArr();
 createCellDivs()
@@ -377,12 +338,6 @@ dealCells()
 findEmpty()
 isMovable()
 console.table(gridArr2)
-// console.log(`emptyLoc at start is ${emptyLoc}`)
-// console.log(`emptyCell at start is ${emptyCell}`)
-
-
-
-
 
 
 
@@ -409,3 +364,23 @@ console.table(gridArr2)
 
 // // right column, don't include left location
 // if (rightCol.includes(emptyLoc)===0)
+
+
+// console.log('_____________________________________________')
+// initial thoughts:
+// Image cells:
+// Create three classes: 
+//  cellImage- general image cells
+//  cellAdj- image cells adjacent to empty cell, thus allowed to move  
+//  cellEmpty- single empty cell that is the only possible location where images can be dropped
+
+// after meeting w/ Michael:
+// click on image, rather than drag. use a 2d array (essentially an array of arrays) 
+
+// Probably going to use some sort combination of ondrag and ondrop to move images from adjacent cells to the empty cell, and then event listener to change the class of the two affected cells.
+// Not sure how to limit the dragability to only those cells that are adjacent to the empty cell. A distance limiter? Since every cell is a square of the same size, if the cellAdj could be limited to a distance slightly larger than the h or w of the empty cell, that would work. Don't know if that is an option.
+
+// how to identify which cells are adjacent to empty cell?
+// empty cell is identified by class & id applied upon creation, but not sure how to figure that out when images are randomly arranged
+// ^^querySelector to find ID
+// console.log('_____________________________________________')
