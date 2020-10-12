@@ -315,11 +315,11 @@ document.querySelector('.button').addEventListener('click', ()=>{
 // let cellVal=document.getElementById('img5')
 // console.log('cellVal:',cellVal)
 // let cellIndex=document.getElementById('cellDiv5')
-// console.log('cellIndex:', cellIndex)
+// console.log('cellIndex:', cellIndex)g
 
 let directions = document.createElement('h3');
 directions.setAttribute('class', 'directions');
-directions.innerHTML = 'MOVE THE NUMBERS INTO THE CORRECT ORDER IN AS FEW MOVES AS POSSIBLE';
+directions.innerHTML = 'MOVE THE NUMBERS INTO THE CORRECT ORDER WITH THE EMPTY IN THE FIRST SQUARE';
 document.body.appendChild(directions)
 
 fillGridArr();
