@@ -306,9 +306,10 @@ document.querySelector('.button').addEventListener('click', ()=>{
 //     // for (let i =0; i<cellArr.length; i++){
 //     for (let i =0; i<2; i++){
 //         let cellVal=document.getElementById(`img${i}`).id
-//         if (cellArr[i]=i){
-//             console.log('game is complete!')
-//         }
+//         console.log(cellVal.id)
+//         // if (cellVal.id=i){
+//         //     console.log('game is complete!')
+//         // }
 //     }
 // }
 
@@ -330,7 +331,7 @@ dealCells()
 findEmpty()
 isMovable()
 console.table(gridArr2)
-
+// checkForComplete()
 
 
 // steps left to code:
