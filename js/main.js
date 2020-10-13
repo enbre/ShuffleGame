@@ -314,9 +314,10 @@ document.querySelector('.button').addEventListener('click', ()=>{
 // }
 
 // let cellVal=document.getElementById('img5')
+// let cellVal=document.getElementById('img5')
 // console.log('cellVal:',cellVal)
 // let cellIndex=document.getElementById('cellDiv5')
-// console.log('cellIndex:', cellIndex)g
+// console.log('cellIndex:', cellIndex)
 
 let directions = document.createElement('h3');
 directions.setAttribute('class', 'directions');
@@ -330,7 +331,7 @@ shuffleCells()
 dealCells()
 findEmpty()
 isMovable()
-console.table(gridArr2)
+// console.table(gridArr2)
 // checkForComplete()
 
 
