@@ -1,6 +1,3 @@
-
----git 
-
 # SHUFFLER
 ### A scrambled picture, broken up into "pixels", is loaded on the main screen with one 'pixel' missing. The goal in this one person puzzle game is to unscramble the image.
 
