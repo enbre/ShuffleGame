@@ -49,7 +49,7 @@
 
 ---
 
-### Game can be seen **[here.](https://enbre.github.io/ShuffleGame/)**
+### Game can be seen **[here.](https://www.noahbrezel/.com/Shuffler)**
 
 ---
 ## Credits
