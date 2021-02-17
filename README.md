@@ -49,7 +49,7 @@
 
 ---
 
-### Game can be seen **[here.](https://www.noahbrezel/.com/Shuffler)**
+### Game can be seen **[here.](https://noahbrezel/.com/Shuffler)**
 
 ---
 ## Credits
